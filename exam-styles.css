@@ -110,26 +110,46 @@ body {
 }
 
 /* Navigation buttons */
-.exam-navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;       /* Increased from 20px */
-    gap: 15px;             /* Increased from 10px */
-}
-
 .nav-button, .submit-button {
-    padding: 12px 24px;     /* Increased from 8px 16px */
+    padding: 15px 35px;     /* Increased from 12px 24px */
+    font-size: 1.1rem;      /* Added font size */
     background-color: var(--card-bg-color);
     border: 1px solid var(--border-color);
     color: var(--text-color);
-    border-radius: 6px;     /* Increased from 4px */
+    border-radius: 8px;     /* Increased from 6px */
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    margin: 0 10px;         /* Added margin for better spacing */
+    transition: all 0.2s ease;
+    margin: 0 15px;         /* Increased from 10px */
+    min-width: 120px;       /* Added minimum width */
 }
 
 .nav-button:hover {
     background-color: #444;
+    transform: scale(1.05); /* Added subtle scale effect on hover */
+}
+
+/* Make sure the navigation container can handle the larger buttons */
+.exam-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;       /* Increased from 30px */
+    gap: 20px;             /* Increased from 15px */
+    padding: 0 10px;       /* Added padding */
+}
+
+/* Ensure proper spacing for the button groups */
+.nav-left, .nav-right {
+    display: flex;
+    gap: 20px;             /* Space between buttons */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-button, .submit-button {
+        padding: 12px 25px; /* Slightly smaller on mobile */
+        font-size: 1rem;
+        min-width: 100px;
+    }
 }
 
 .submit-button {
