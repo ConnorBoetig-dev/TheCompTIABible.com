@@ -91,21 +91,13 @@ async function generatePracticeExam() {
     const exam = practiceExamSelect.value;
     const count = questionCountSelect.value;
     
-    // Show loading state
-    practiceExamOutput.style.display = "block";
-    practiceExamOutput.innerHTML = "<p>Generating practice exam...</p>";
+    console.log('Generating practice exam:', { exam, count }); // Debug log
     
-    try {
-        // Modified API endpoint to not include domain
-        const apiUrl = `${QUESTION_API_URL_BASE}/practice-exam?exam=${exam}&limit=${count}`;
-        const response = await fetch(apiUrl);
-        const questions = await response.json();
-        
-        displayPracticeExam(questions);
-    } catch (error) {
-        practiceExamOutput.innerHTML = "<p>Error generating practice exam. Please try again.</p>";
-        console.error("Practice exam generation error:", error);
-    }
+    // Open exam in new window/tab
+    const examUrl = `exam.html?exam=${exam}&count=${count}`;
+    console.log('Opening URL:', examUrl); // Debug log
+    
+    window.open(examUrl, '_blank');
 }
 
 function displayPracticeExam(questions) {
@@ -176,6 +168,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Save preference
     localStorage.setItem('theme', newTheme);
   });
+
+  // Add this new event listener
+  generatePracticeExamButton.addEventListener("click", generatePracticeExam);
 });
 
 
