@@ -118,7 +118,16 @@ body {
     box-sizing: border-box;
 }
 
-/* Options styling */
+/* Question text styling - increased font size */
+.question-text {
+    font-size: 1.4rem;          /* Increased from 1.2rem to 1.4rem */
+    font-weight: 500;           
+    margin-bottom: 20px;        
+    line-height: 1.4;           
+    color: #ffffff;             
+}
+
+/* Options styling - keeping original size but ensuring clear distinction */
 .options-container {
     display: flex;
     flex-direction: column;
@@ -127,11 +136,13 @@ body {
 }
 
 .option-item {
+    font-size: 1rem;            /* Smaller than question text */
     padding: 10px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    color: #cccccc;             /* Slightly dimmer than question text */
 }
 
 .option-item:hover {
@@ -171,7 +182,50 @@ body {
     margin-top: 20px;
 }
 
+/* Exam wrapper adjustments for perfect centering */
+.exam-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0;                /* Remove padding that might affect centering */
+    background-color: var(--bg-color);
+    position: fixed;           /* Fix the wrapper to viewport */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;         /* Allow scrolling if content is too tall */
+}
 
+/* Exam container adjustments */
+.exam-container {
+    width: 90%;
+    max-width: 900px;         /* Slightly reduced to ensure it fits better */
+    margin: auto;             /* Auto margins for perfect centering */
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;       /* Ensure it stays centered in wrapper */
+    max-height: 90vh;        /* Prevent container from being too tall */
+    overflow-y: auto;        /* Allow scrolling within container if needed */
+}
 
+/* Ensure the body doesn't interfere with centering */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;        /* Prevent body scrolling */
+    height: 100vh;          /* Full viewport height */
+}
+
+/* Question box adjustments */
+.question-box {
+    padding: 20px;
+    margin: 20px 0;
+}
 
 
