@@ -482,261 +482,27 @@ button:hover {
    Could add more breakpoints (e.g., @media (max-width: 1024px)) for tablets. */
 
 /* =========================
-   CHAT MESSAGE STYLING
-========================= */
-.message {
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-    max-width: 80%;
-}
-
-.user-message {
-    background-color: #2a2a2a;
-    margin-left: auto;
-    text-align: right;
-}
-
-.assistant-message {
-    background-color: #1a1a1a;
-    margin-right: auto;
-}
-
-#chatMessages {
-    height: 300px;
-    overflow-y: auto;
-    padding: 10px;
-}
-/* AFFECTS: Styling for chat messages.
-   EDITING IMPACT: These styles control the appearance of messages in the chat window.
-   Adjust padding, margin, and border-radius to change the spacing and visual style of messages. */
-
-/* =========================
-   CHAT INTERFACE
-========================= */
-/* CHAT WINDOW (MESSAGE DISPLAY AREA) */
-.chat-window {
-    background-color: #c5c5c5;               /* BACKGROUND: Light gray background for chat area */
-                                             /* OPTIONS: Lighter colors (#ddd-#fff) or darker for contrast */
-    border: 3px solid #707070;               /* BORDER: Thick middle-gray border */
-                                             /* OPTIONS: Thinner (1-2px) for subtlety, different color for contrast */
-    color: #010101;                          /* TEXT COLOR: Near-black text for readability */
-                                             /* OPTIONS: Any dark color on light background for readability */
-    padding: 30px;                           /* INTERNAL SPACING: Space inside the chat window */
-                                             /* IMPACT: How much padding around all messages */
-    margin: 5px 0;                           /* VERTICAL SPACING: Small gap above/below chat window */
-                                             /* IMPACT: Distance from heading above and controls below */
-    max-height: 750px;                       /* HEIGHT LIMIT: Maximum height before scrolling */
-                                             /* CRITICAL SETTING: Controls chat window size */
-                                             /* OPTIONS: 250px (smaller), 500px (medium), 1000px+ (very tall) */
-    overflow-y: auto;                        /* SCROLL BEHAVIOR: Vertical scrollbar appears when needed */
-                                             /* OPTIONS: 'scroll' to always show scrollbar, 'hidden' to disable */
-}
-/* AFFECTS: The scrollable area where chat messages appear.
-   EDITING IMPACT: This is the main display area for conversation. The max-height directly
-   controls how tall the chat window appears - the key setting you wanted to adjust. */
-
-/* CHAT CONTROLS LAYOUT (INPUT + BUTTON CONTAINER) */
-.chat-controls {
-    display: grid;                           /* LAYOUT METHOD: Uses CSS Grid */
-    grid-template-columns: 1fr auto;         /* COLUMN WIDTHS: Flexible input + auto-sized button */
-                                             /* IMPACT: Input will expand to fill available space */
-    gap: 5px;                                /* SPACING: Gap between input and button */
-                                             /* OPTIONS: 0 to remove gap, 10px+ for more separation */
-}
-/* AFFECTS: The container holding the input field and send button.
-   EDITING IMPACT: Grid layout makes the input expand to fill available space while
-   the button takes only as much space as it needs. */
-
-/* CHAT INPUT FIELD */
-.chat-input {
-    min-width: 0;                            /* PREVENTS: Grid layout overflow issues */
-    width: 100%;                             /* WIDTH: Fill available space in grid cell */
-    background-color: #aeaeae;               /* BACKGROUND: Medium-light gray for input */
-                                             /* OPTIONS: Lighter color for more contrast with text */
-    color: #000;                             /* TEXT COLOR: Black text for maximum readability */
-    border: 1px solid #ccc;                  /* BORDER: Subtle light gray border */
-                                             /* OPTIONS: Darker border for more definition */
-    border-radius: 0px;                      /* CORNERS: Square corners (no rounding) */
-                                             /* OPTIONS: Add rounding (3px+) for softer look */
-    padding: 4px;                            /* INTERNAL SPACING: Space inside the input field */
-                                             /* IMPACT: Affects text position within input */
-}
-/* AFFECTS: The text input field where users type their questions.
-   EDITING IMPACT: Controls the appearance of the input box. The color scheme
-   intentionally differs from the dark theme to highlight the input area. */
-
-/* CHAT SEND BUTTON */
-.chat-button {
-    cursor: pointer;                         /* CURSOR: Hand pointer on hover */
-    padding: 6px 12px;                       /* INTERNAL PADDING: Button size */
-                                             /* FORMAT: vertical(top/bottom) horizontal(left/right) */
-    background-color: var(--card-bg-color);  /* BACKGROUND: Same as card background */
-    color: var(--text-color);                /* TEXT COLOR: Same as main text color */
-    border: 1px solid var(--text-color);     /* BORDER: Thin white border (matches text) */
-    border-radius: 3px;                      /* ROUNDED CORNERS: Slight rounding */
-}
-/* AFFECTS: The "Send" button next to the chat input.
-   EDITING IMPACT: Maintains consistent button styling with the Generate button. */
-
-/* CHAT SEND BUTTON HOVER STATE */
-.chat-button:hover {
-    background-color: var(--border-color);   /* HOVER BACKGROUND: Darker background when hovered */
-}
-/* AFFECTS: Visual feedback when hovering over the Send button.
-   EDITING IMPACT: Consistent with other button hover effects throughout the interface. */
-
-/* USER MESSAGE STYLING */
-.chat-message-user {
-    color: #6e6e6e;                          /* TEXT COLOR: Medium-dark gray for user messages */
-                                             /* OPTIONS: Darker for more contrast, or themed color */
-    margin-bottom: 6px;                      /* VERTICAL SPACING: Gap below each user message */
-                                             /* IMPACT: Space between consecutive messages */
-}
-/* AFFECTS: Messages sent by the user in the chat window.
-   EDITING IMPACT: Using a darker gray helps distinguish user messages from AI responses.
-   Additional styling like background color or padding could be added for more emphasis. */
-
-/* AI ASSISTANT MESSAGE STYLING */
-.chat-message-assistant {
-    color: #000;                             /* TEXT COLOR: Black text for AI responses */
-                                             /* OPTIONS: Any dark color for emphasis/contrast */
-    margin-bottom: 6px;                      /* VERTICAL SPACING: Gap below each AI message */
-                                             /* IMPACT: Space between consecutive messages */
-}
-/* AFFECTS: Messages from the AI assistant in the chat window.
-   EDITING IMPACT: Using black text for AI responses creates contrast with user messages.
-   Could be enhanced with backgrounds or borders for more visual separation. */
-
-/* =========================
-   OPTION CONTAINERS (FOR RADIO BUTTONS)
-========================= */
-/* OPTION GROUP CONTAINER */
-.options-container {
-    display: flex;                           /* LAYOUT METHOD: Flexbox for arrangement */
-    flex-direction: column;                  /* STACKING: Vertical arrangement */
-                                             /* OPTIONS: 'row' would arrange options horizontally */
-    gap: 8px;                                /* SPACING: Gap between options */
-                                             /* IMPACT: Vertical space between radio button options */
-}
-/* AFFECTS: Container for radio button option groups.
-   EDITING IMPACT: Controls how radio button options are arranged. Column direction
-   stacks them vertically for better readability with longer option text. */
-
-/* INDIVIDUAL OPTION LABELS */
-.options-container label {
-    display: flex;                           /* LAYOUT METHOD: Flexbox for alignment */
-    align-items: flex-start;                 /* VERTICAL ALIGNMENT: Align from the top */
-                                             /* OPTIONS: 'center' for middle alignment */
-    line-height: 1.4;                        /* LINE HEIGHT: Space between text lines */
-                                             /* IMPACT: Readability of multi-line option text */
-    cursor: pointer;                         /* CURSOR: Hand pointer makes entire label clickable */
-    white-space: normal;                     /* TEXT WRAPPING: Allow text to wrap */
-    word-wrap: break-word;                   /* WORD BREAKING: Allow long words to break */
-    margin-bottom: 0;                        /* REMOVES: Extra bottom margin */
-}
-/* AFFECTS: Text labels for radio button options.
-   EDITING IMPACT: These settings optimize radio buttons for longer text options,
-   allowing text to wrap properly while maintaining alignment with the button. */
-
-/* RADIO BUTTON INPUT */
-.options-container label input[type="radio"] {
-    margin-right: 6px;                       /* SPACING RIGHT: Gap between button and text */
-                                             /* IMPACT: How far text is from the radio button */
-    margin-top: 3px;                         /* SPACING TOP: Slight offset for better alignment */
-                                             /* IMPACT: Vertical alignment with first line of text */
-}
-/* AFFECTS: The actual radio button input elements.
-   EDITING IMPACT: The top margin helps align the radio button with the first line of text,
-   which is important for multi-line option text. */
-
-/* =========================
-   TWO-COLUMN LAYOUT
-========================= */
-/* Two-column layout */
-.two-column-layout {
-    display: grid;
-    grid-template-columns: 7fr 3fr;
-    gap: 0;
-    margin: 0;
-    width: 100%;
-    align-items: start;
-}
-
-/* Left column */
-.left-column {
-    display: grid;
-    grid-auto-flow: row;
-    gap: 20px;
-    padding-right: 20px;
-}
-
-/* Right column */
-.right-column {
-    min-width: 0;
-    max-width: none;
-    margin: 0;
-    padding: 0;
-    padding-right: 40px;    /* Add buffer space on the right */
-    height: auto;
-}
-
-/* RIGHT COLUMN CARD */
-.right-column .card {
-    max-width: none;
-    margin: 0;
-    min-height: 300px;
-    width: 100%;
-}
-/* AFFECTS: The card(s) inside the right column.
-   EDITING IMPACT: This specifically targets cards in the right column to ensure they
-   expand to fill the available space, rather than being limited by the default card max-width. */
-
-/* =========================
-   RESPONSIVE LAYOUT (MOBILE)
-========================= */
-@media (max-width: 768px) {
-    /* DASHBOARD CONTAINER - MOBILE */
-    .dashboard-container {
-        grid-template-columns: 1fr;          /* COLUMN LAYOUT: Single column on mobile */
-                                             /* IMPACT: Stacks sidebar on top of main content */
-    }
-    
-    /* SIDEBAR - MOBILE */
-    .sidebar {
-        width: 100%;                         /* WIDTH: Full width in mobile layout */
-        min-height: auto;                    /* HEIGHT: Only as tall as needed for content */
-                                             /* IMPACT: No longer forces full viewport height */
-    }
-    
-    /* TWO-COLUMN LAYOUT - MOBILE */
-    .two-column-layout {
-        grid-template-columns: 1fr;          /* COLUMN LAYOUT: Single column on mobile */
-                                             /* IMPACT: Stacks left and right columns vertically */
-    }
-}
-/* AFFECTS: Layout changes for mobile/small screens (width <= 768px).
-   EDITING IMPACT: These rules only activate on smaller screens, creating a
-   more appropriate layout for mobile devices by stacking elements vertically.
-   Could add more breakpoints (e.g., @media (max-width: 1024px)) for tablets. */
-
-/* =========================
    NEXT BUTTON STYLING
 ========================= */
-.next-button {
+#questionContainer .next-button {
     display: block;
     margin: 20px auto 10px;
-    padding: 10px 20px;
-    background-color: var(--accent-color);
-    color: white;
-    border: none;
+    padding: 12px 24px;
+    background-color: #2a2a2a;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    font-size: 16px;
+    transition: transform 0.2s ease,
+                background-color 0.2s ease,
+                box-shadow 0.2s ease;
 }
 
-.next-button:hover {
-    background-color: var(--accent-hover-color);
+#questionContainer .next-button:hover {
+    transform: translateY(-2px);
+    background-color: #3a3a3a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 /* AFFECTS: The "Next" button in the question generator.
    EDITING IMPACT: This button allows users to generate the next question
@@ -1023,4 +789,8 @@ button:hover {
 .feedback-incorrect {
     color: #FF6B6B;  /* Soft pastel red */
 }
+
+
+
+
 
