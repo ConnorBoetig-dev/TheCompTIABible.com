@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">                             <!-- CHARACTER ENCODING: Ensures proper text rendering across browsers -->
+  <title>Simple Black Dashboard</title>              <!-- PAGE TITLE: Appears in browser tab/window title bar -->
+  <link rel="stylesheet" href="styles.css">          <!-- CSS LINK: Connects to external stylesheet for all visual styling -->
+</head>
+
+<body>
+  <!-- =============================================
+       DASHBOARD CONTAINER
+       The main wrapper that creates the sidebar + content layout using CSS Grid
+       This div is styled with display: grid and grid-template-columns: 200px 1fr
+       Modification Impact: Any structural changes to this container will affect the entire layout
+       ============================================= -->
+  <div class="dashboard-container">
+
+    <!-- =============================================
+         SIDEBAR SECTION
+         Fixed-width (200px) vertical navigation panel
+         Contains the site title/logo and main navigation links
+         Styled with background-color: rgb(80, 86, 89) and full viewport height
+         Modification Impact: Width changes require matching updates to dashboard-container grid settings
+         ============================================= -->
+    <div class="sidebar">
+      <h3>ConnorBWorkin</h3>                        <!-- USERNAME/BRAND: Site identity displayed at top of sidebar -->
+                                                    <!-- Editing this changes the displayed site owner name -->
+      <a href="#">Home</a>                          <!-- NAVIGATION LINK: First main navigation option -->
+                                                    <!-- Replace # with actual URL to enable navigation -->
+      <a href="#">Features</a>                      <!-- NAVIGATION LINK: Second main navigation option -->
+                                                    <!-- All links are styled with hover effects in CSS -->
+      <a href="#">Settings/Help</a>                 <!-- NAVIGATION LINK: Third main navigation option -->
+                                                    <!-- Additional links can be added by copying this pattern -->
+    </div>
+
+    <!-- =============================================
+         MAIN CONTENT SECTION
+         Flexible-width area containing all interactive components
+         Takes remaining width after sidebar (controlled by grid-template-columns: 200px 1fr)
+         Has 80px left padding to separate content from sidebar
+         Modification Impact: Content, spacing and alignment changes affect user workflow
+         ============================================= -->
+    <div class="main-content">
+      <!-- TITLE: Main content area heading -->
+      <h2>CompTIA Bible</h2>                       <!-- PAGE HEADING: Main title for the entire application -->
+                                                   <!-- Changing this updates the primary heading seen by users -->
+
+      <!-- =============================================
+           TWO-COLUMN LAYOUT
+           Creates the 70/30 split for main content vs. additional section
+           Using CSS Grid with grid-template-columns: 7fr 3fr
+           Modification Impact: Adjusting column ratios changes space allocation
+           ============================================= -->
+      <div class="two-column-layout">
+
+        <!-- =============================================
+             LEFT COLUMN (70%)
+             Primary content area with multiple stacked cards
+             Contains question generator, controls, and chat interface
+             Uses CSS Grid with grid-auto-flow: row for vertical stacking
+             Modification Impact: Cards here form the core functionality
+             ============================================= -->
+        <div class="left-column">
+
+          <!-- CARD: Question Generator Introduction -->
+          <div class="card">                       <!-- CARD TYPE: Standard full-width card -->
+                                                   <!-- All cards have hover effects defined in CSS -->
+            <h2>Question Generator</h2>            <!-- CARD TITLE: Identifies the card's purpose -->
+            <p>Pick an exam, pick a domain, generate a question. Not rocket science.</p>
+                                                   <!-- DESCRIPTION: Brief instruction for card functionality -->
+                                                   <!-- Edit this text to provide different user guidance -->
+          </div>
+
+          <!-- CARD: Exam/Domain Selection Controls -->
+          <div class="thin-card">                  <!-- CARD TYPE: Thin card for form controls -->
+                                                   <!-- "thin-card" shares most styling with "card" but typically used for controls -->
+            <label for="examSelect">Exam:</label>  <!-- FORM LABEL: Identifies the exam dropdown -->
+            <select id="examSelect" name="exam">   <!-- DROPDOWN: Exam selection control -->
+                                                   <!-- The ID connects label to control for accessibility -->
+                                                   <!-- The "name" attribute is used when submitting forms -->
+              <option value="" disabled selected>Select Exam</option>
+                                                   <!-- DEFAULT OPTION: Initial placeholder text -->
+                                                   <!-- "disabled selected" makes this a non-selectable placeholder -->
+              <option value="1101">A+ 1101</option><!-- DROPDOWN OPTION: First actual choice -->
+                                                   <!-- "value" is what gets sent to backend/JavaScript -->
+              <option value="1102">A+ 1102</option><!-- DROPDOWN OPTION: Second actual choice -->
+                                                   <!-- Add more options by duplicating this pattern -->
+            </select>
+
+            <label for="domainSelect">Domain:</label><!-- FORM LABEL: Identifies the domain dropdown -->
+            <select id="domainSelect" name="domain"><!-- DROPDOWN: Domain selection control -->
+                                                   <!-- Values are populated by JavaScript based on selected exam -->
+              <option value="" disabled selected>Select Domain</option>
+                                                   <!-- DEFAULT OPTION: Initial placeholder text -->
+            </select>
+
+            <button id="generateButton" type="button">Generate</button>
+                                                   <!-- BUTTON: Triggers question generation -->
+                                                   <!-- "id" connects to JavaScript for click handling -->
+                                                   <!-- "type=button" prevents accidental form submission -->
+          </div>
+
+          <!-- CARD: Question Output Area (Hidden by Default) -->
+          <div class="thin-card" id="outputCard">  <!-- CARD TYPE: Initially hidden output container -->
+                                                   <!-- CSS sets display: none; JavaScript shows when needed -->
+                                                   <!-- "id" allows JavaScript to target this specific element -->
+            <div id="questionContainer">           <!-- CONTAINER: For dynamically generated questions -->
+              <!-- Questions from API are inserted here by JavaScript -->
+                                                   <!-- This div starts empty and gets filled programmatically -->
+                                                   <!-- Each question typically includes a prompt and answer options -->
+            </div>
+          </div>
+
+          <!-- CARD: Chat/Explanation Interface -->
+          <div class="thin-card" id="secondCard">  <!-- CARD TYPE: Chat interface container -->
+                                                   <!-- "id" allows JavaScript to target this specific element -->
+            <h2>Need further explanation?</h2>
+            <h3>Have a conversation about it with an AI chatbot.</h3>
+                                                   <!-- CARD TITLE: Instructions for the chat feature -->
+                                                   <!-- Edit this to change the chat prompt/guidance -->
+            <div id="chatWindow" class="chat-window">
+                                                   <!-- CONTAINER: Scrollable area for chat messages -->
+                                                   <!-- Messages are added here dynamically by JavaScript -->
+                                                   <!-- Height controlled by .chat-window max-height: 750px -->
+              <!-- Chat messages will go here -->   <!-- PLACEHOLDER: No initial content, filled by JavaScript -->
+            </div>
+            <div class="chat-controls">            <!-- CONTAINER: Holds input field and send button -->
+                                                   <!-- Uses CSS Grid layout for flexible input + fixed button -->
+              <input 
+                type="text" 
+                id="userInput" 
+                class="chat-input" 
+                placeholder="Type your question..." 
+              />                                   <!-- INPUT FIELD: For user questions/messages -->
+                                                   <!-- "id" connects to JavaScript for value access -->
+                                                   <!-- "placeholder" shows helper text when empty -->
+              <button id="sendButton" class="chat-button">Send</button>
+                                                   <!-- BUTTON: Submits the user's question -->
+                                                   <!-- Click handler attached via JavaScript -->
+            </div>
+          </div>
+
+        </div> <!-- End .left-column -->
+
+        <!-- =============================================
+             RIGHT COLUMN (30%)
+             Secondary content area for additional tools, resources or information
+             Width controlled by two-column-layout grid-template-columns: 7fr 3fr
+             Modification Impact: Content here is supplementary to main functionality
+             ============================================= -->
+        <div class="right-column">
+          <div class="card" id="additionalSection"><!-- CARD TYPE: Standard card for right column -->
+                                                   <!-- "id" allows targeting via CSS and JavaScript -->
+                                                   <!-- Uses .right-column .card CSS to override max-width -->
+            <h2>90q Practice Exam Generator</h2>            <!-- CARD TITLE: Identifies the purpose of this area -->
+                                                   <!-- Could be renamed to match actual content purpose -->
+            <p>
+              Pick an exam, pick a domain, generate a 90 question practice test from the CompTIA bible.<br />
+                                                   <!-- DESCRIPTION: Explains the area's purpose -->
+                                                   <!-- <br /> creates a line break within paragraph -->
+                                                   <!-- Additional content goes here -->
+                                                   <!-- Could include lists, links, tools, or other content -->
+            </p>
+          </div>
+        </div> <!-- End .right-column -->
+
+      </div> <!-- End .two-column-layout -->
+
+    </div> <!-- End .main-content -->
+  </div> <!-- End .dashboard-container -->
+
+  <!-- JAVASCRIPT CONNECTION -->
+  <script src="app.js"></script>              <!-- SCRIPT TAG: Links to external JavaScript file -->
+                                              <!-- Contains all interactive functionality -->
+                                              <!-- Loads after HTML to ensure elements exist before manipulation -->
+</body>
+</html>
