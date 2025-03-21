@@ -115,7 +115,7 @@
           <div class="thin-card" id="secondCard">  <!-- CARD TYPE: Chat interface container -->
                                                    <!-- "id" allows JavaScript to target this specific element -->
             <h2>Need further explanation?</h2>
-            <h3>Have a conversation about it with an AI chatbot.</h3>
+            <h3>Ask AI, who knows the context of what you just answered!</h3>
                                                    <!-- CARD TITLE: Instructions for the chat feature -->
                                                    <!-- Edit this to change the chat prompt/guidance -->
             <div id="chatWindow" class="chat-window">
@@ -149,18 +149,37 @@
              Modification Impact: Content here is supplementary to main functionality
              ============================================= -->
         <div class="right-column">
-          <div class="card" id="additionalSection"><!-- CARD TYPE: Standard card for right column -->
-                                                   <!-- "id" allows targeting via CSS and JavaScript -->
-                                                   <!-- Uses .right-column .card CSS to override max-width -->
-            <h2>90q Practice Exam Generator</h2>            <!-- CARD TITLE: Identifies the purpose of this area -->
-                                                   <!-- Could be renamed to match actual content purpose -->
-            <p>
-              Pick an exam, pick a domain, generate a 90 question practice test from the CompTIA bible.<br />
-                                                   <!-- DESCRIPTION: Explains the area's purpose -->
-                                                   <!-- <br /> creates a line break within paragraph -->
-                                                   <!-- Additional content goes here -->
-                                                   <!-- Could include lists, links, tools, or other content -->
-            </p>
+          <div class="card" id="additionalSection">
+            <h2>90q Practice Exam Generator</h2>
+            <p>Generate a custom practice test with up to 90 questions.</p>
+            
+            <div class="practice-exam-controls">
+              <label for="practiceExamSelect">Exam:</label>
+              <select id="practiceExamSelect" name="practiceExam">
+                <option value="" disabled selected>Select Exam</option>
+                <option value="1101">A+ 1101</option>
+                <option value="1102">A+ 1102</option>
+              </select>
+
+              <label for="practiceDomainSelect">Domain:</label>
+              <select id="practiceDomainSelect" name="practiceDomain" disabled>
+                <option value="" disabled selected>Select Domain</option>
+              </select>
+
+              <label for="questionCountSelect">Number of Questions:</label>
+              <select id="questionCountSelect" name="questionCount" disabled>
+                <option value="" disabled selected>Select Count</option>
+                <!-- Will be populated via JavaScript -->
+              </select>
+
+              <button id="generatePracticeExamButton" type="button" disabled>
+                Generate Practice Exam
+              </button>
+            </div>
+
+            <div id="practiceExamOutput" style="display: none;">
+              <!-- Questions will be inserted here -->
+            </div>
           </div>
         </div> <!-- End .right-column -->
 

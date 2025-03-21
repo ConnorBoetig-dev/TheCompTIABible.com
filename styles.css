@@ -790,7 +790,41 @@ button:hover {
     color: #FF6B6B;  /* Soft pastel red */
 }
 
+/* Practice Exam Generator Controls */
+.practice-exam-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 0;
+}
 
+.practice-exam-controls select {
+    width: 100%;
+    padding: 8px;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 5px;
+}
 
+.practice-exam-controls button {
+    margin-top: 10px;
+    padding: 12px;
+    background-color: #2a2a2a;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
 
+.practice-exam-controls button:hover:not(:disabled) {
+    background-color: #3a3a3a;
+    transform: translateY(-2px);
+}
+
+.practice-exam-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 

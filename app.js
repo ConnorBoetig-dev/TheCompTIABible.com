@@ -67,6 +67,89 @@ const chatWindow       = document.getElementById("chatWindow");      // The scro
 const userInput        = document.getElementById("userInput");       // The text input field where users type questions
 const sendButton       = document.getElementById("sendButton");      // The button users click to send chat messages
 
+// Practice Exam Generator Elements
+const practiceExamSelect = document.getElementById("practiceExamSelect");
+const practiceDomainSelect = document.getElementById("practiceDomainSelect");
+const questionCountSelect = document.getElementById("questionCountSelect");
+const generatePracticeExamButton = document.getElementById("generatePracticeExamButton");
+const practiceExamOutput = document.getElementById("practiceExamOutput");
+
+// Initialize Practice Exam controls
+practiceExamSelect.addEventListener("change", function() {
+    practiceDomainSelect.disabled = false;
+    populatePracticeDomains();
+});
+
+practiceDomainSelect.addEventListener("change", function() {
+    questionCountSelect.disabled = false;
+    populateQuestionCount();
+});
+
+questionCountSelect.addEventListener("change", function() {
+    generatePracticeExamButton.disabled = false;
+});
+
+function populatePracticeDomains() {
+    // Clear existing options
+    while (practiceDomainSelect.options.length > 1) {
+        practiceDomainSelect.remove(1);
+    }
+    
+    const selectedExam = practiceExamSelect.value;
+    if (!selectedExam || !domainOptions[selectedExam]) return;
+    
+    domainOptions[selectedExam].forEach(domain => {
+        const option = document.createElement("option");
+        option.value = domain;
+        option.textContent = domain;
+        practiceDomainSelect.appendChild(option);
+    });
+}
+
+function populateQuestionCount() {
+    // Clear existing options
+    while (questionCountSelect.options.length > 1) {
+        questionCountSelect.remove(1);
+    }
+    
+    // Add options from 1 to 90
+    for (let i = 1; i <= 90; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = `${i} questions`;
+        questionCountSelect.appendChild(option);
+    }
+}
+
+generatePracticeExamButton.addEventListener("click", generatePracticeExam);
+
+async function generatePracticeExam() {
+    const exam = practiceExamSelect.value;
+    const domain = practiceDomainSelect.value;
+    const count = questionCountSelect.value;
+    
+    // Show loading state
+    practiceExamOutput.style.display = "block";
+    practiceExamOutput.innerHTML = "<p>Generating practice exam...</p>";
+    
+    try {
+        // You'll need to create this API endpoint
+        const apiUrl = `${QUESTION_API_URL_BASE}/practice-exam?domain=${domain}&limit=${count}`;
+        const response = await fetch(apiUrl);
+        const questions = await response.json();
+        
+        displayPracticeExam(questions);
+    } catch (error) {
+        practiceExamOutput.innerHTML = "<p>Error generating practice exam. Please try again.</p>";
+        console.error("Practice exam generation error:", error);
+    }
+}
+
+function displayPracticeExam(questions) {
+    // Implementation for displaying the practice exam
+    // You'll need to create this based on how you want to present the questions
+}
+
 
 /********************************************************
  * EVENT LISTENERS SETUP
