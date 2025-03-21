@@ -234,9 +234,25 @@ async function generateQuestion() {
  * - Changes to this function affect how questions appear visually
  * - Could be enhanced to add explanation sections, images, etc.
  ********************************************************/
+let currentQuestionContext = null;
+
 function displayQuestion(question) {
-  console.log("Full question object structure:", JSON.stringify(question, null, 2));
-  
+  // Store the current question context
+  currentQuestionContext = {
+    question: question["question-text"],
+    options: {
+      A: question["option-a"],
+      B: question["option-b"],
+      C: question["option-c"],
+      D: question["option-d"]
+    },
+    correctAnswer: question["correct answer"],
+    domain: question["domain"]
+  };
+
+  // Add debug logging
+  console.log('Setting question context:', currentQuestionContext);
+
   const questionDiv = document.createElement("div");
   
   // Add the question prompt
@@ -347,25 +363,35 @@ async function sendChatMessage() {
     
     if (!message) return;
 
+    // Add debug logging
+    console.log('Current question context:', currentQuestionContext);
+
     // Display user message
     addMessageToChat("user", message);
     userInput.value = "";
 
-    try {
-      const response = await fetch(CHAT_API_URL, {
+    const payload = {
+        message: message,
+        context: {
+            currentQuestion: currentQuestionContext,
+            instruction: "The user is looking at a CompTIA practice question. Use this context to provide more relevant answers. Don't directly reveal the correct answer unless explicitly asked."
+        }
+    };
 
+    // Debug log the payload
+    console.log('Sending payload:', payload);
+
+    try {
+        const response = await fetch(CHAT_API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                message: message
-            })
+            body: JSON.stringify(payload)
         });
 
         const data = await response.json();
         
-        // Match the Lambda's response format which uses "reply"
         if (data.reply) {
             addMessageToChat("assistant", data.reply);
         } else if (data.error) {
