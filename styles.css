@@ -30,11 +30,12 @@
 
 /* Theme toggle button styles */
 .theme-toggle {
-    position: absolute;
+    position: fixed;  /* Change from absolute to fixed */
     bottom: 20px;
     left: 20px;
-    right: 20px;
+    width: 160px;  /* Set explicit width to match sidebar minus padding */
     padding: 10px;
+    z-index: 100;  /* Ensure button stays on top */
     background-color: var(--card-bg-color);
     color: var(--text-color);
     border: 1px solid var(--border-color);
@@ -80,9 +81,13 @@ body {
    SIDEBAR STYLING
 ========================= */
 .sidebar {
-    width: 200px;                           /* WIDTH: Matches the first value in grid-template-columns above */
-                                            /* MUST MATCH: Should be the same as grid-template-columns first value */
-    min-height: 100vh;                      /* HEIGHT: Makes sidebar full height regardless of content amount */
+    position: fixed;  /* Make sidebar fixed */
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    overflow-y: auto;  /* Allow scrolling if content is too tall */
+    padding-bottom: 80px;  /* Add padding to prevent button overlap */
     background-color: var(--sidebar-bg-color); /* BACKGROUND: Medium gray color specific to sidebar */
                                             /* OPTIONS: Any darker color works; lighter colors may need darker text */
     border-right: 2px solid var(--border-color); /* RIGHT BORDER: Creates vertical divider between sidebar and content */
@@ -886,6 +891,7 @@ button:hover {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
 
 
 
