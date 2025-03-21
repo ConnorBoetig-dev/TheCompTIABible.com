@@ -998,3 +998,29 @@ button:hover {
 
 
 
+/* =========================
+   QUESTION FEEDBACK STYLING
+========================= */
+.explanation-container h4 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.explanation-container h4:contains("Correct") {
+    color: #90EE90;  /* Soft pastel green */
+}
+
+.explanation-container h4:contains("Incorrect") {
+    color: #FF6B6B;  /* Soft pastel red */
+}
+
+/* Alternative approach using specific classes */
+.feedback-correct {
+    color: #90EE90;  /* Soft pastel green */
+}
+
+.feedback-incorrect {
+    color: #FF6B6B;  /* Soft pastel red */
+}
+

@@ -295,7 +295,9 @@ function displayQuestion(question) {
 
       // Show explanation
       explanationDiv.innerHTML = `
-        <h4>${index === correctAnswer ? "Correct!" : "Incorrect"}</h4>
+        <h4 class="${index === correctAnswer ? 'feedback-correct' : 'feedback-incorrect'}">
+            ${index === correctAnswer ? "Correct!" : "Incorrect"}
+        </h4>
         <p>${explanations[index]}</p>
       `;
       explanationDiv.style.display = "block";
