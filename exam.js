@@ -83,6 +83,9 @@ function displayQuestion(index) {
     const progress = ((index + 1) / currentQuestions.length) * 100;
     document.getElementById('progressFill').style.width = `${progress}%`;
 
+    // Add domain display
+    document.getElementById('domainIndicator').textContent = `Domain: ${question.domain}`;
+
     questionContainer.innerHTML = `
         <div class="question-text">
             ${question.question || question['question-text']}

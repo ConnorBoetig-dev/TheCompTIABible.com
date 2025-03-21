@@ -75,15 +75,20 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;      /* Increased from 15px */
+    margin-bottom: 10px;      /* Reduced from 20px to tighten spacing */
 }
 
 .status-item {
-    font-size: 1.3rem;        /* Increased from 1.1rem */
+    font-size: 1.3rem;
     color: #cccccc;
-    padding: 12px 16px;       /* Increased from 8px 12px */
+    padding: 12px 16px;
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;       /* Increased from 4px */
+    border-radius: 6px;
+}
+
+/* Add specific styling for the second exam-status div */
+.exam-status:nth-child(2) {
+    margin-bottom: 20px;      /* Keep original spacing before progress bar */
 }
 
 /* Progress bar container and status */
