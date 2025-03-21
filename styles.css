@@ -9,12 +9,44 @@
    CSS VARIABLES (THEME COLORS)
 ========================= */
 :root {
-    --bg-color: #111;          /* PAGE BACKGROUND: Change this to alter the entire page background. Darker values (#000-#333) maintain the dark theme. */
-    --text-color: #fff;        /* PRIMARY TEXT COLOR: Affects all default text. For readability on dark backgrounds, keep this light (#ccc-#fff). */
-    --border-color: #444;      /* BORDER & DIVIDER COLOR: Used for sidebar border and other separators. Mid-tone grays (#333-#666) work best. */
-    --card-bg-color: #333;     /* CARD BACKGROUNDS: Slightly lighter than the page background. Adjust between #222-#444 for more/less contrast. */
-    --card-border-color: #444; /* CARD BORDERS: Subtle borders for question containers. Should be slightly darker/lighter than card backgrounds. */
+    /* Dark theme (default) */
+    --bg-color: #111;
+    --text-color: #fff;
+    --border-color: #444;
+    --card-bg-color: #333;
+    --card-border-color: #444;
+    --sidebar-bg-color: rgb(80, 86, 89);
 }
+
+/* Light theme variables */
+[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --border-color: #dddddd;
+    --card-bg-color: #f5f5f5;
+    --card-border-color: #e0e0e0;
+    --sidebar-bg-color: #e0e0e0;
+}
+
+/* Theme toggle button styles */
+.theme-toggle {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    padding: 10px;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background-color: var(--border-color);
+}
+
 /* TIP: To create a new theme, simply change these 5 color variables rather than searching through the stylesheet. */
 
 /* =========================
@@ -51,7 +83,7 @@ body {
     width: 200px;                           /* WIDTH: Matches the first value in grid-template-columns above */
                                             /* MUST MATCH: Should be the same as grid-template-columns first value */
     min-height: 100vh;                      /* HEIGHT: Makes sidebar full height regardless of content amount */
-    background-color: rgb(80, 86, 89);      /* BACKGROUND: Medium gray color specific to sidebar */
+    background-color: var(--sidebar-bg-color); /* BACKGROUND: Medium gray color specific to sidebar */
                                             /* OPTIONS: Any darker color works; lighter colors may need darker text */
     border-right: 2px solid var(--border-color); /* RIGHT BORDER: Creates vertical divider between sidebar and content */
                                             /* OPTIONS: Increase thickness (3px+) for more emphasis */
@@ -59,6 +91,7 @@ body {
                                             /* IMPACT: Smaller value (10px) condenses sidebar, larger (30px+) makes it airier */
     box-shadow: 2px 0 4px rgba(0,0,0,0.3);  /* VISUAL EFFECT: Subtle shadow on right edge for depth */
                                             /* FORMAT: horizontal-offset vertical-offset blur-radius color */
+    position: relative; /* Add this for absolute positioning of the button */
 }
 /* AFFECTS: The left sidebar containing navigation links (Home, Features, Settings).
    EDITING IMPACT: Width changes require matching update to dashboard-container grid-template-columns.
@@ -135,12 +168,19 @@ body {
 /* CARD HOVER EFFECTS */
 .card:hover,
 .thin-card:hover {
-    transform: translateY(-2px);             /* MOVEMENT: Lifts card 2px upward when hovered */
-                                             /* OPTIONS: Increase for more dramatic lift, 0 to disable */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);/* ENHANCED SHADOW: Larger, darker shadow on hover */
-                                             /* FORMAT: h-offset v-offset blur-radius color */
-    background-color: #2a2a2a;               /* BACKGROUND CHANGE: Slightly darker background on hover */
-                                             /* OPTIONS: Any color, typically darker than default card background */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    /* Replace the hardcoded #2a2a2a with a lighter hover effect for light mode */
+    background-color: var(--card-bg-color);
+    filter: brightness(0.95); /* This will darken light cards slightly and lighten dark cards slightly */
+}
+
+/* Add specific hover effects for light theme */
+[data-theme="light"] .card:hover,
+[data-theme="light"] .thin-card:hover {
+    background-color: var(--card-bg-color);
+    filter: brightness(0.95);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 /* AFFECTS: Visual feedback when users hover over any card.
    EDITING IMPACT: Creates interactive feeling. Remove transform for no movement effect.
@@ -192,28 +232,45 @@ select {
 
 /* BUTTONS */
 button {
-    cursor: pointer;                         /* CURSOR: Hand pointer on hover for better UX */
-    padding: 6px 12px;                       /* INTERNAL PADDING: Size of the button */
-                                             /* FORMAT: vertical(top/bottom) horizontal(left/right) */
-                                             /* IMPACT: Smaller padding = smaller button, larger = bigger button */
-    background-color: var(--card-bg-color);  /* BACKGROUND: Same as card background */
-    color: var(--text-color);                /* TEXT COLOR: Same as main text color */
-    border: 1px solid var(--text-color);     /* BORDER: Thin white border (matches text) */
-                                             /* OPTIONS: Thicker border for emphasis */
-    border-radius: 3px;                      /* ROUNDED CORNERS: Slight rounding */
-                                             /* OPTIONS: 0 for square corners, 5px+ for more rounded */
+    cursor: pointer;
+    padding: 6px 12px;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+/* BUTTON HOVER STATE */
+button:hover {
+    background-color: var(--border-color);
+}
+
+/* Light theme specific button styles */
+[data-theme="light"] button {
+    background-color: #e0e0e0;
+    border: 1px solid #999;
+    color: #333;
+}
+
+[data-theme="light"] button:hover {
+    background-color: #d0d0d0;
+}
+
+/* Keep the Generate and Next buttons consistent */
+[data-theme="light"] .practice-exam-controls button,
+[data-theme="light"] #questionContainer .next-button {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+[data-theme="light"] .practice-exam-controls button:hover,
+[data-theme="light"] #questionContainer .next-button:hover {
+    background-color: #d0d0d0;
 }
 /* AFFECTS: All buttons including Generate and Send buttons.
    EDITING IMPACT: These styles define the appearance of clickable buttons throughout the interface.
    Consistent styling maintains visual harmony. Adjust padding to control button size. */
-
-/* BUTTON HOVER STATE */
-button:hover {
-    background-color: var(--border-color);   /* HOVER BACKGROUND: Darker background when hovered */
-}
-/* AFFECTS: Visual feedback when users hover over any button.
-   EDITING IMPACT: Provides interactive feeling. Choose a hover color that's noticeably
-   different from the default button background but still fits the color scheme. */
 
 /* =========================
    QUESTION DISPLAY
@@ -829,6 +886,9 @@ button:hover {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+
+
 
 
 

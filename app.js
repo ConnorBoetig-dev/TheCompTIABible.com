@@ -74,6 +74,9 @@ const questionCountSelect = document.getElementById("questionCountSelect");
 const generatePracticeExamButton = document.getElementById("generatePracticeExamButton");
 const practiceExamOutput = document.getElementById("practiceExamOutput");
 
+// Theme toggle button
+const themeToggle = document.getElementById("themeToggle");
+
 // Initialize Practice Exam controls
 practiceExamSelect.addEventListener("change", function() {
     questionCountSelect.disabled = false;
@@ -153,6 +156,26 @@ document.addEventListener("DOMContentLoaded", function() {
   
   // Set up send button click handler
   sendButton.addEventListener("click", sendChatMessage);
+
+  // Check for saved theme preference
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  themeToggle.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+
+  // Add event listener for theme toggle
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    // Update the theme
+    document.documentElement.setAttribute('data-theme', newTheme);
+    
+    // Update button text
+    themeToggle.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+    
+    // Save preference
+    localStorage.setItem('theme', newTheme);
+  });
 });
 
 
