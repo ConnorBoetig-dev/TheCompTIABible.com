@@ -23,22 +23,25 @@
  * - Update domain lists by modifying the arrays
  * - Changing these affects what users can select in the Domain dropdown
  ********************************************************/
+import { QUESTION_API_URL_BASE, CHAT_API_URL } from './config.js';
+
+console.log("app.js loaded");
+
 const domainOptions = {
   "1101": [
-    "1.1","1.2","1.3","1.4",              // Mobile devices domain options
-    "2.1","2.2","2.3","2.4","2.5","2.6","2.7","2.8",  // Networking domain options
-    "3.1","3.2","3.3","3.4","3.5","3.6","3.7",        // Hardware domain options
-    "4.1","4.2",                                      // Virtualization & cloud computing
-    "5.1","5.2","5.3","5.4","5.5","5.6","5.7"         // Hardware & network troubleshooting
+    "1.1","1.2","1.3","1.4",
+    "2.1","2.2","2.3","2.4","2.5","2.6","2.7","2.8",
+    "3.1","3.2","3.3","3.4","3.5","3.6","3.7",
+    "4.1","4.2",
+    "5.1","5.2","5.3","5.4","5.5","5.6","5.7"
   ],
   "1102": [
-    "1.1","1.2","1.3","1.4","1.5","1.6","1.7","1.8","1.9","1.10","1.11",  // Operating systems
-    "2.1","2.2","2.3","2.4","2.5","2.6","2.7","2.8","2.9","2.10",         // Security
-    "3.1","3.2","3.3","3.4","3.5",                                        // Software troubleshooting
-    "4.1","4.2","4.3","4.4","4.5","4.6","4.7","4.8","4.9"                 // Operational procedures
+    "1.1","1.2","1.3","1.4","1.5","1.6","1.7","1.8","1.9","1.10","1.11",
+    "2.1","2.2","2.3","2.4","2.5","2.6","2.7","2.8","2.9","2.10",
+    "3.1","3.2","3.3","3.4","3.5",
+    "4.1","4.2","4.3","4.4","4.5","4.6","4.7","4.8","4.9"
   ]
-};
-// You can add more exams by adding new properties to this object
+}; // You can add more exams by adding new properties to this object
 // For example: "Net+": ["1.1", "1.2", ...] would add the Network+ exam
 
 
@@ -77,8 +80,22 @@ const sendButton       = document.getElementById("sendButton");      // The butt
  * - The 'DOMContentLoaded' event ensures the page is fully loaded before setup
  ********************************************************/
 document.addEventListener("DOMContentLoaded", function() {
-  // Set up exam selection change handler
-  examSelect.addEventListener("change", populateDomains);
+  console.log("DOM loaded");
+  console.log("examSelect element:", examSelect);
+  
+  // Test if the examSelect exists and has options
+  if (examSelect) {
+    console.log("Available exam options:", Array.from(examSelect.options).map(opt => opt.value));
+  }
+  
+  // Add change event listener with console log
+  examSelect.addEventListener("change", function(e) {
+    console.log("Exam selection changed to:", e.target.value);
+    populateDomains();
+  });
+  
+  // Initially disable the domain select
+  domainSelect.disabled = true;
   
   // Set up generate button click handler
   generateButton.addEventListener("click", generateQuestion);
@@ -110,6 +127,8 @@ document.addEventListener("DOMContentLoaded", function() {
  * - Adding additional logic here could filter or sort domains
  ********************************************************/
 function populateDomains() {
+  console.log("populateDomains called");
+  
   // Clear existing options (except the placeholder)
   while (domainSelect.options.length > 1) {
     domainSelect.remove(1);
@@ -117,9 +136,12 @@ function populateDomains() {
   
   // Get the selected exam value
   const selectedExam = examSelect.value;
+  console.log("Selected exam:", selectedExam);
+  console.log("Available domains for this exam:", domainOptions[selectedExam]);
   
   // If no exam is selected or the exam doesn't exist in our data, exit
   if (!selectedExam || !domainOptions[selectedExam]) {
+    console.log("No exam selected or invalid exam");
     return;
   }
   
@@ -129,10 +151,12 @@ function populateDomains() {
     option.value = domain;
     option.textContent = domain;
     domainSelect.appendChild(option);
+    console.log("Added domain option:", domain);
   });
   
-  // Enable the domain select dropdown (it might be disabled if no exam was selected)
+  // Enable the domain select dropdown
   domainSelect.disabled = false;
+  console.log("Domain select enabled");
 }
 
 
@@ -150,7 +174,7 @@ function populateDomains() {
  * - Modifying this affects how questions are fetched and displayed
  * - Could be expanded to cache questions, track history, etc.
  ********************************************************/
-function generateQuestion() {
+async function generateQuestion() {
   // Get the selected exam and domain
   const selectedExam = examSelect.value;
   const selectedDomain = domainSelect.value;
@@ -170,23 +194,30 @@ function generateQuestion() {
   questionContainer.innerHTML = "<p>Loading question...</p>";
   outputCard.style.display = "block";
   
-  // In a real application, you would fetch from an API
-  // For this example, we'll simulate with a timeout
-  setTimeout(() => {
-    // Example question (in a real app, this would come from an API)
-    const question = {
-      prompt: `This is a sample ${selectedExam} question from domain ${selectedDomain}. Which of the following is correct?`,
-      options: [
-        "A) First possible answer that could be right",
-        "B) Second possible answer that might be correct",
-        "C) Third option that could be the answer",
-        "D) Fourth option that might be selected"
-      ],
-      correct: 2  // Index of correct answer (0-based, so "C" is correct)
-    };
+  try {
+    console.log('Fetching question for domain:', selectedDomain); // Debug log
     
-    displayQuestion(question);
-  }, 500);
+    const apiUrl = `${QUESTION_API_URL_BASE}?domain=${selectedDomain}&limit=1`;
+
+    console.log('API URL:', apiUrl); // Debug log
+    
+    const response = await fetch(apiUrl);
+    console.log('Response status:', response.status); // Debug log
+    
+    const data = await response.json();
+    console.log('Response data:', data); // Debug log
+    
+    if (data && data.length > 0) {
+      const question = data[0];
+      console.log('Question object:', question); // Added this line to see question structure
+      displayQuestion(question);
+    } else {
+      questionContainer.innerHTML = "<p>No questions found for this domain.</p>";
+    }
+  } catch (error) {
+    console.error('Detailed error:', error); // More detailed error logging
+    questionContainer.innerHTML = "<p>Error loading question. Please try again.</p>";
+  }
 }
 
 
@@ -209,7 +240,7 @@ function displayQuestion(question) {
   
   // Add the question prompt
   const promptEl = document.createElement("h3");
-  promptEl.textContent = question.prompt;
+  promptEl.textContent = question["question-text"]; // Changed from question.question
   questionDiv.appendChild(promptEl);
   
   // Create container for options
@@ -217,7 +248,14 @@ function displayQuestion(question) {
   optionsContainer.className = "options-container";
   
   // Add each answer option
-  question.options.forEach((option, index) => {
+  const options = [
+    question["option-a"],
+    question["option-b"],
+    question["option-c"],
+    question["option-d"]
+  ];
+  
+  options.forEach((option, index) => {
     const label = document.createElement("label");
     
     const radio = document.createElement("input");
@@ -232,6 +270,13 @@ function displayQuestion(question) {
   });
   
   questionDiv.appendChild(optionsContainer);
+
+  // Add Next button
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "Next Question";
+  nextButton.className = "next-button";
+  nextButton.onclick = generateQuestion;
+  questionDiv.appendChild(nextButton);
   
   // Clear previous questions and add the new one
   questionContainer.innerHTML = "";
@@ -256,50 +301,42 @@ function displayQuestion(question) {
  * - Can be expanded for more sophisticated chat features
  * - Consider adding error handling, input validation, etc.
  ********************************************************/
-const OPENAI_API_KEY = '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'; // Replace with your actual API key
-
 async function sendChatMessage() {
-  const message = userInput.value.trim();
-  
-  if (!message) return;
-
-  // Display user message
-  addMessageToChat("user", message);
-  userInput.value = "";
-
-  try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [{
-          role: "system",
-          content: "You are a helpful CompTIA exam tutor. Provide detailed explanations for CompTIA exam topics."
-        }, {
-          role: "user",
-          content: message
-        }],
-        temperature: 0.7
-      })
-    });
-
-    const data = await response.json();
+    const message = userInput.value.trim();
     
-    if (data.choices && data.choices[0]) {
-      const aiResponse = data.choices[0].message.content;
-      addMessageToChat("assistant", aiResponse);
-    } else {
-      throw new Error('Invalid response format');
-    }
+    if (!message) return;
 
-  } catch (error) {
-    console.error('Error:', error);
-    addMessageToChat("assistant", "Sorry, I encountered an error. Please try again.");
-  }
+    // Display user message
+    addMessageToChat("user", message);
+    userInput.value = "";
+
+    try {
+      const response = await fetch(CHAT_API_URL, {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: message
+            })
+        });
+
+        const data = await response.json();
+        
+        // Match the Lambda's response format which uses "reply"
+        if (data.reply) {
+            addMessageToChat("assistant", data.reply);
+        } else if (data.error) {
+            throw new Error(data.error);
+        } else {
+            throw new Error('Invalid response format');
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        addMessageToChat("assistant", "Sorry, I encountered an error. Please try again.");
+    }
 }
 
 
