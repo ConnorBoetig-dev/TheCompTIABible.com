@@ -320,9 +320,91 @@ body {
     }
 }
 
+/* Theme toggle button - updated size and position */
+.theme-toggle {
+    position: fixed;
+    bottom: 10px; /* Changed from top to bottom */
+    left: 10px;   /* Changed from right to left */
+    padding: 4px 10px; /* Reduced padding */
+    background-color: rgba(51, 51, 51, 0.8);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8rem; /* Reduced font size */
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 24px; /* Explicit height */
+}
 
+.theme-toggle:hover {
+    background-color: rgba(51, 51, 51, 0.9);
+    transform: translateY(-2px);
+}
 
+/* Light theme styles */
+[data-theme="light"] {
+    --bg-color: #f5f5f5;
+    --text-color: #000000; /* Changed to solid black */
+    --border-color: #ddd;
+    --card-bg-color: #fff;
+    --option-bg: #f8f8f8;
+    --secondary-text: #666; /* For time remaining and question count */
+}
 
+[data-theme="light"] .theme-toggle {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
 
+[data-theme="light"] .exam-container {
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
+[data-theme="light"] .option-item {
+    background-color: var(--option-bg);
+    color: #000000; /* Solid black */
+    border: 1px solid var(--border-color);
+}
 
+[data-theme="light"] .option-item:hover {
+    background-color: #eee;
+}
+
+[data-theme="light"] .option-item.selected {
+    background-color: #e0e0e0;
+}
+
+/* Question text in light mode */
+[data-theme="light"] .question-text {
+    color: #000000; /* Solid black */
+}
+
+/* Options text in light mode */
+[data-theme="light"] .option-item {
+    background-color: var(--option-bg);
+    color: #000000; /* Solid black */
+    border: 1px solid var(--border-color);
+}
+
+/* Time remaining and question count in light mode */
+[data-theme="light"] .exam-status {
+    color: var(--secondary-text);
+}
+
+[data-theme="light"] .time-remaining,
+[data-theme="light"] .question-count {
+    color: var(--secondary-text);
+}
+
+/* Ensure exam title remains visible in light mode */
+[data-theme="light"] .exam-title h1 {
+    color: #000000; /* Solid black */
+}

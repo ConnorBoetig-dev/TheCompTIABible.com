@@ -15,6 +15,7 @@ const questionNumberElement = document.getElementById('questionNumber');
 const prevButton = document.getElementById('prevQuestion');
 const nextButton = document.getElementById('nextQuestion'); // Fixed: was 'nextButton'
 const submitButton = document.getElementById('submitExam');
+const themeToggle = document.getElementById('themeToggle');
 
 // Initialize exam
 async function initializeExam() {
@@ -180,8 +181,31 @@ function submitExam() {
     });
 }
 
+function initializeTheme() {
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeToggle.textContent = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+
+    // Add click handler
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Update theme
+        document.documentElement.setAttribute('data-theme', newTheme);
+        themeToggle.textContent = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+        
+        // Save preference
+        localStorage.setItem('theme', newTheme);
+    });
+}
+
 // Initialize when the page loads
-document.addEventListener('DOMContentLoaded', initializeExam);
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTheme();
+    initializeExam();
+});
 
 // Helper function to shuffle an array
 function shuffleArray(array) {
