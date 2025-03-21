@@ -78,6 +78,10 @@ function displayQuestion(index) {
     const question = currentQuestions[index];
     if (!question) return;
 
+    // Update progress bar
+    const progress = ((index + 1) / currentQuestions.length) * 100;
+    document.getElementById('progressFill').style.width = `${progress}%`;
+
     questionContainer.innerHTML = `
         <div class="question-text">
             ${question.question || question['question-text']}
@@ -185,6 +189,7 @@ function shuffleArray(array) {
     }
     return array;
 }
+
 
 
 

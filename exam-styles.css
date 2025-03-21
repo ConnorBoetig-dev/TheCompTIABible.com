@@ -59,19 +59,54 @@ body {
 
 /* Header styles */
 .exam-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    padding: 20px 0;
+    margin-bottom: 30px;
     border-bottom: 1px solid var(--border-color);
 }
 
-.exam-info {
+.exam-title h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    color: #ffffff;
+}
+
+.exam-status {
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    font-size: 14px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.status-item {
+    font-size: 1.1rem;
+    color: #cccccc;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+/* Progress bar container and status */
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #4CAF50;
+    width: 0%;
+    transition: width 0.3s ease;
 }
 
 /* Navigation buttons */
@@ -224,8 +259,27 @@ body {
 
 /* Question box adjustments */
 .question-box {
-    padding: 20px;
-    margin: 20px 0;
+    margin-top: 30px;
 }
+
+/* Progress bar styling */
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #4CAF50;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+
+
 
 
