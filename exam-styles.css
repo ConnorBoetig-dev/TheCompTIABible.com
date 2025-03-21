@@ -1,97 +1,144 @@
+/* Base theme inheritance */
+:root {
+    --bg-color: #111;
+    --text-color: #fff;
+    --border-color: #444;
+    --card-bg-color: #333;
+    --sidebar-bg-color: #222;
+}
+
+/* Dashboard container */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: var(--sidebar-bg-color);
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Main content */
+.main-content {
+    grid-column: 2;
+    padding: 20px;
+    background-color: var(--bg-color);
+}
+
+/* Exam container */
 .exam-container {
-    max-width: 1200px;
+    width: 100%;
+    max-width: 800px;
     margin: 0 auto;
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
     padding: 20px;
 }
 
+/* Reset body styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Header styles */
 .exam-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    padding: 15px;
-    background-color: var(--card-bg-color);
-    border-radius: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
 }
 
-#examTimer {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: var(--text-color);
-}
-
-.exam-progress {
+.exam-info {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-    max-width: 300px;
+    font-size: 14px;
 }
 
-#progressBar {
-    width: 100%;
-    height: 10px;
-    background-color: #ddd;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
-#progressBar::after {
-    content: '';
-    display: block;
-    height: 100%;
-    background-color: var(--primary-color);
-    border-radius: 5px;
-    width: 0%;
-    transition: width 0.3s ease;
-}
-
-.exam-content {
-    background-color: var(--card-bg-color);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
+/* Navigation buttons */
 .exam-navigation {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
     margin-top: 20px;
+    gap: 10px;
 }
 
-.question-review-panel {
-    position: fixed;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+.nav-button {
+    padding: 8px 16px;
     background-color: var(--card-bg-color);
-    padding: 15px;
-    border-radius: 8px;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-#questionGrid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
-    margin-top: 10px;
-}
-
-.question-number {
-    padding: 5px;
-    text-align: center;
-    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
-.question-answered {
-    background-color: var(--primary-color);
+.nav-button:hover {
+    background-color: #444;
+}
+
+.submit-button {
+    padding: 8px 16px;
+    background-color: #28a745;
+    border: none;
     color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
-.question-flagged {
-    border: 2px solid #ff9800;
+.submit-button:hover {
+    background-color: #218838;
 }
 
+/* Question container */
+.question-box {
+    margin: 20px 0;
+    min-height: 200px;
+}
+
+/* Options styling */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.option-item {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.option-item:hover {
+    background-color: #444;
+}
+
+.option-item.selected {
+    background-color: #444;
+    border-color: #666;
+}
+
+/* Modal styles */
 .modal {
     display: none;
     position: fixed;
@@ -100,10 +147,11 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 
 .modal-content {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -111,11 +159,13 @@
     padding: 20px;
     border-radius: 8px;
     text-align: center;
+    z-index: 1001;
 }
 
 .modal-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
     margin-top: 20px;
 }
+
+
+
+

@@ -8,31 +8,32 @@
     <link rel="stylesheet" href="exam-styles.css">
 </head>
 <body>
-    <div class="exam-container">
-        <div class="exam-header">
-            <div class="exam-info">
+    <div class="exam-wrapper">
+        <div class="exam-container">
+            <div class="exam-header">
                 <h1>CompTIA Practice Exam</h1>
-                <div id="examTimer">Time Remaining: 90:00</div>
+                <div class="exam-info">
+                    <span id="examTimer">Time Remaining: 90:00</span>
+                    <span id="questionNumber">Question 1 of 90</span>
+                </div>
             </div>
-            <div class="exam-progress">
-                <span id="questionNumber">Question 1 of 90</span>
-                <div id="progressBar"></div>
-            </div>
-        </div>
 
-        <div class="exam-content">
-            <div id="questionContainer"></div>
+            <div class="question-box">
+                <div id="questionContainer">
+                    <!-- Question content will be inserted here -->
+                </div>
+            </div>
+
             <div class="exam-navigation">
-                <button id="prevQuestion" disabled>Previous</button>
-                <button id="nextQuestion">Next</button>
-                <button id="flagQuestion">Flag for Review</button>
-                <button id="submitExam" class="submit-button">Submit Exam</button>
+                <div class="nav-left">
+                    <button id="prevQuestion" class="nav-button">Previous</button>
+                    <button id="nextQuestion" class="nav-button">Next</button>
+                    <button id="flagQuestion" class="nav-button">Flag for Review</button>
+                </div>
+                <div class="nav-right">
+                    <button id="submitExam" class="submit-button">Submit Exam</button>
+                </div>
             </div>
-        </div>
-
-        <div class="question-review-panel">
-            <h3>Question Review</h3>
-            <div id="questionGrid"></div>
         </div>
     </div>
 
@@ -43,8 +44,8 @@
             <p>Answered: <span id="answeredCount">0</span>/90</p>
             <p>Flagged: <span id="flaggedCount">0</span></p>
             <div class="modal-buttons">
-                <button id="confirmSubmit">Yes, Submit</button>
-                <button id="cancelSubmit">Continue Exam</button>
+                <button id="confirmSubmit" class="nav-button">Yes, Submit</button>
+                <button id="cancelSubmit" class="nav-button">Continue Exam</button>
             </div>
         </div>
     </div>
@@ -52,3 +53,6 @@
     <script type="module" src="exam.js"></script>
 </body>
 </html>
+
+
+
