@@ -236,47 +236,39 @@ function populateDomains() {
  * - Could be expanded to cache questions, track history, etc.
  ********************************************************/
 async function generateQuestion() {
-  // Get the selected exam and domain
   const selectedExam = examSelect.value;
   const selectedDomain = domainSelect.value;
   
-  // Validate selections
-  if (!selectedExam) {
-    alert("Please select an exam.");
+  if (!selectedExam || !selectedDomain) {
+    alert("Please select an exam and domain.");
     return;
   }
   
-  if (!selectedDomain) {
-    alert("Please select a domain.");
-    return;
-  }
-  
-  // Show loading state
   questionContainer.innerHTML = "<p>Loading question...</p>";
   outputCard.style.display = "block";
   
   try {
-    console.log('Fetching question for domain:', selectedDomain); // Debug log
+    console.log('Fetching question for domain:', selectedDomain);
     
-    const apiUrl = `${QUESTION_API_URL_BASE}?domain=${selectedDomain}&limit=1`;
+    // Modified to use domains instead of domain
+    const apiUrl = `${QUESTION_API_URL_BASE}?domains=${selectedDomain}&limit=1`;
 
-    console.log('API URL:', apiUrl); // Debug log
+    console.log('API URL:', apiUrl);
     
     const response = await fetch(apiUrl);
-    console.log('Response status:', response.status); // Debug log
+    console.log('Response status:', response.status);
     
     const data = await response.json();
-    console.log('Response data:', data); // Debug log
+    console.log('Response data:', data);
     
     if (data && data.length > 0) {
       const question = data[0];
-      console.log('Question object:', question); // Added this line to see question structure
       displayQuestion(question);
     } else {
       questionContainer.innerHTML = "<p>No questions found for this domain.</p>";
     }
   } catch (error) {
-    console.error('Detailed error:', error); // More detailed error logging
+    console.error('Detailed error:', error);
     questionContainer.innerHTML = "<p>Error loading question. Please try again.</p>";
   }
 }
