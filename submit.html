@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Results</title>
+    <!-- Update paths to match your structure -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="submit-styles.css">
+</head>
+<body data-theme="dark">
+    <div class="sidebar">
+        <h3>ConnorBWorkin</h3>
+        <a href="index.html">Home</a>
+        <a href="#">Features</a>
+        <a href="#">Settings/Help</a>
+    </div>
+
+    <div class="results-container">
+        <div class="score-card">
+            <h1>Exam Results</h1>
+            <div class="circular-progress">
+                <div class="progress-value">0%</div>
+            </div>
+            <div class="score-details">
+                <p>Questions Correct: <span id="correctCount">0</span>/<span id="totalQuestions">0</span></p>
+                <p>Time Taken: <span id="timeTaken">0:00</span></p>
+            </div>
+            <div class="action-buttons">
+                <button onclick="window.location.href='index.html'" class="nav-button">Return Home</button>
+                <button id="generateNewTest" class="nav-button">Generate New Test</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="themeToggle" class="theme-toggle">🌙 Dark</button>
+    <script src="submit.js"></script>
+</body>
+</html>
+
+

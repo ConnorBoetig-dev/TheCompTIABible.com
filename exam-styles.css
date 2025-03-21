@@ -152,17 +152,29 @@ body {
     }
 }
 
+/* Submit button - keep consistent green in both themes */
 .submit-button {
     background-color: #28a745;
     border: none;
     color: white;
-    border-radius: 6px;     /* Increased from 4px */
+    border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 .submit-button:hover {
     background-color: #218838;
+}
+
+/* Remove any light theme overrides that might affect the submit button */
+[data-theme="light"] .submit-button {
+    background-color: #28a745;  /* Keep the same green */
+    color: white;  /* Keep text white for contrast */
+    border: none;
+}
+
+[data-theme="light"] .submit-button:hover {
+    background-color: #218838;  /* Keep the same hover state */
 }
 
 /* Question container */

@@ -172,13 +172,23 @@ function showSubmitModal() {
 }
 
 function submitExam() {
-    // TODO: Implement exam submission logic
     clearInterval(timerInterval);
-    // You'll need to implement the logic to submit answers to your backend
-    console.log('Exam submitted:', {
-        answers: userAnswers,
-        timeRemaining: examTimer,
-    });
+    
+    // Calculate score
+    const score = currentQuestions.reduce((acc, question, index) => {
+        return acc + (userAnswers[index] === question['correct answer'] ? 1 : 0);
+    }, 0);
+    
+    // Calculate time spent (90 minutes - remaining time)
+    const timeSpent = 5400 - examTimer;
+    
+    // Get the original parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const exam = urlParams.get('exam');
+    const count = urlParams.get('count');
+    
+    // Redirect to submit page with all parameters
+    window.location.href = `submit.html?score=${score}&total=${currentQuestions.length}&time=${timeSpent}&exam=${exam}&count=${count}`;
 }
 
 function initializeTheme() {
