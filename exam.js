@@ -158,8 +158,10 @@ function setupEventListeners() {
 function showSubmitModal() {
     const modal = document.getElementById('examSubmitModal');
     const answeredCount = userAnswers.filter(answer => answer !== null).length;
+    const totalQuestions = currentQuestions.length;
     
     document.getElementById('answeredCount').textContent = answeredCount;
+    document.getElementById('totalQuestions').textContent = totalQuestions;
     
     modal.style.display = 'block';
     
