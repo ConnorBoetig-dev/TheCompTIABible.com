@@ -76,11 +76,6 @@ const practiceExamOutput = document.getElementById("practiceExamOutput");
 
 // Initialize Practice Exam controls
 practiceExamSelect.addEventListener("change", function() {
-    practiceDomainSelect.disabled = false;
-    populatePracticeDomains();
-});
-
-practiceDomainSelect.addEventListener("change", function() {
     questionCountSelect.disabled = false;
     populateQuestionCount();
 });
@@ -89,43 +84,8 @@ questionCountSelect.addEventListener("change", function() {
     generatePracticeExamButton.disabled = false;
 });
 
-function populatePracticeDomains() {
-    // Clear existing options
-    while (practiceDomainSelect.options.length > 1) {
-        practiceDomainSelect.remove(1);
-    }
-    
-    const selectedExam = practiceExamSelect.value;
-    if (!selectedExam || !domainOptions[selectedExam]) return;
-    
-    domainOptions[selectedExam].forEach(domain => {
-        const option = document.createElement("option");
-        option.value = domain;
-        option.textContent = domain;
-        practiceDomainSelect.appendChild(option);
-    });
-}
-
-function populateQuestionCount() {
-    // Clear existing options
-    while (questionCountSelect.options.length > 1) {
-        questionCountSelect.remove(1);
-    }
-    
-    // Add options from 1 to 90
-    for (let i = 1; i <= 90; i++) {
-        const option = document.createElement("option");
-        option.value = i;
-        option.textContent = `${i} questions`;
-        questionCountSelect.appendChild(option);
-    }
-}
-
-generatePracticeExamButton.addEventListener("click", generatePracticeExam);
-
 async function generatePracticeExam() {
     const exam = practiceExamSelect.value;
-    const domain = practiceDomainSelect.value;
     const count = questionCountSelect.value;
     
     // Show loading state
@@ -133,8 +93,8 @@ async function generatePracticeExam() {
     practiceExamOutput.innerHTML = "<p>Generating practice exam...</p>";
     
     try {
-        // You'll need to create this API endpoint
-        const apiUrl = `${QUESTION_API_URL_BASE}/practice-exam?domain=${domain}&limit=${count}`;
+        // Modified API endpoint to not include domain
+        const apiUrl = `${QUESTION_API_URL_BASE}/practice-exam?exam=${exam}&limit=${count}`;
         const response = await fetch(apiUrl);
         const questions = await response.json();
         
@@ -543,4 +503,27 @@ function formatDomainLabel(domain) {
 function sanitizeInput(input) {
   // Basic sanitization to prevent XSS
   return input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function populateQuestionCount() {
+    // Clear ALL options including the first one
+    questionCountSelect.innerHTML = '';
+    
+    // Add the default option
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Select Count";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    questionCountSelect.appendChild(defaultOption);
+    
+    // Add options in increments of 15
+    const questionCounts = [15, 30, 45, 60, 75, 90];
+    
+    questionCounts.forEach(count => {
+        const option = document.createElement("option");
+        option.value = count;
+        option.textContent = count.toString();
+        questionCountSelect.appendChild(option);
+    });
 }
