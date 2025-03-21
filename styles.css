@@ -97,9 +97,9 @@ body {
    MAIN CONTENT AREA
 ========================= */
 .main-content {
-    padding: 30px 40px;    /* Even padding on both sides */
-    padding-left: 80px;    /* Extra padding to prevent sidebar overlap */
-    width: auto;
+    padding: 30px 0; /* Remove horizontal padding */
+    max-width: 1400px; /* Match two-column-layout max-width */
+    margin: 0 auto; /* Center the content */
 }
 /* AFFECTS: The main content area containing all cards, forms and interactive elements.
    EDITING IMPACT: The padding-left is CRUCIAL - it determines how far your content sits from the sidebar.
@@ -110,8 +110,8 @@ body {
 ========================= */
 .card,
 .thin-card {
-    max-width: 900px;                        /* MAXIMUM WIDTH: Prevents cards from becoming too wide on large screens */
-                                             /* OPTIONS: Smaller (700px) for narrower cards, or remove for full-width */
+    width: 100%; /* Added */
+    max-width: none; /* Remove fixed max-width */
     background-color: var(--card-bg-color);  /* BACKGROUND: Dark gray card background from theme variable */
     border: 2px solid var(--text-color);     /* BORDER: White border (matching text color) for visual definition */
                                              /* OPTIONS: Thinner (1px) for subtlety, or different color for contrast */
@@ -417,10 +417,11 @@ button:hover {
 /* Two-column layout */
 .two-column-layout {
     display: grid;
-    grid-template-columns: 7fr 3fr;
-    gap: 0;
-    margin: 0;
-    width: 100%;
+    grid-template-columns: minmax(auto, 900px) minmax(300px, 400px);
+    gap: 20px; /* Reduced from 40px to 20px for a smaller gap */
+    margin: 0 auto;
+    max-width: 1400px;
+    padding: 0 40px;
     align-items: start;
 }
 
@@ -429,7 +430,8 @@ button:hover {
     display: grid;
     grid-auto-flow: row;
     gap: 20px;
-    padding-right: 20px;
+    width: 100%; /* Added */
+    padding-right: 0; /* Remove right padding since we're using gap */
 }
 
 /* Right column */
@@ -438,7 +440,6 @@ button:hover {
     max-width: none;
     margin: 0;
     padding: 0;
-    padding-right: 40px;    /* Add buffer space on the right */
     height: auto;
 }
 
@@ -683,10 +684,11 @@ button:hover {
 /* Two-column layout */
 .two-column-layout {
     display: grid;
-    grid-template-columns: 7fr 3fr;
-    gap: 0;
-    margin: 0;
-    width: 100%;
+    grid-template-columns: minmax(auto, 900px) minmax(300px, 400px); /* Updated */
+    gap: 40px; /* Added controlled gap */
+    margin: 0 auto; /* Center the layout */
+    max-width: 1400px; /* Added max-width to prevent excessive stretching */
+    padding: 0 40px; /* Added horizontal padding */
     align-items: start;
 }
 
@@ -695,7 +697,8 @@ button:hover {
     display: grid;
     grid-auto-flow: row;
     gap: 20px;
-    padding-right: 20px;
+    width: 100%; /* Added */
+    padding-right: 0; /* Remove right padding since we're using gap */
 }
 
 /* Right column */
@@ -704,7 +707,6 @@ button:hover {
     max-width: none;
     margin: 0;
     padding: 0;
-    padding-right: 40px;    /* Add buffer space on the right */
     height: auto;
 }
 
@@ -827,4 +829,6 @@ button:hover {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+
 
