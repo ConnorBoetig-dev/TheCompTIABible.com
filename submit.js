@@ -3,16 +3,13 @@ const urlParams = new URLSearchParams(window.location.search);
 const score = parseInt(urlParams.get('score')) || 0;
 const total = parseInt(urlParams.get('total')) || 0;
 const timeSpent = parseInt(urlParams.get('time')) || 0;
-const originalExam = urlParams.get('exam') || '1101';
-const originalCount = urlParams.get('count') || '90';
 
 // Calculate percentage
 const percentage = Math.round((score / total) * 100) || 0;
 
 // Update DOM elements
 document.querySelector('.progress-value').textContent = `${percentage}%`;
-document.getElementById('correctCount').textContent = score;
-document.getElementById('totalQuestions').textContent = total;
+document.getElementById('score').textContent = `${score}/${total}`;
 
 // Format and display time taken
 const minutes = Math.floor(timeSpent / 60);
@@ -27,11 +24,14 @@ progressBar.style.background =
 
 // Theme toggle functionality
 const themeToggle = document.getElementById('themeToggle');
-
-// Check for saved theme preference
 const savedTheme = localStorage.getItem('theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
-themeToggle.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+
+function generateNewTest() {
+    const originalExam = urlParams.get('exam') || '1101';
+    const originalCount = urlParams.get('count') || '90';
+    window.location.href = `exam.html?exam=${originalExam}&count=${originalCount}`;
+}
 
 // Add event listener for theme toggle
 themeToggle.addEventListener('click', () => {
@@ -49,7 +49,5 @@ themeToggle.addEventListener('click', () => {
 });
 
 // Update the "Generate New Test" button to include original parameters
-document.getElementById('generateNewTest').onclick = () => {
-    window.location.href = `exam.html?exam=${originalExam}&count=${originalCount}`;
-};
+document.getElementById('generateNewTest').onclick = generateNewTest;
 

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="submit-styles.css">
 </head>
-<body data-theme="dark">
+<body>
     <div class="sidebar">
         <h3>ConnorBWorkin</h3>
         <a href="index.html">Home</a>
@@ -15,26 +15,20 @@
         <a href="#">Settings/Help</a>
         <button id="themeToggle" class="theme-toggle">Light/Dark Mode</button>
     </div>
-
     <div class="results-container">
-        <div class="score-card">
-            <h1>Exam Results</h1>
+        <div class="results-card">
+            <h2>Exam Results</h2>
             <div class="circular-progress">
-                <div class="progress-value">0%</div>
+                <span class="progress-value">0%</span>
             </div>
-            <div class="score-details">
-                <p>Questions Correct: <span id="correctCount">0</span>/<span id="totalQuestions">0</span></p>
-                <p>Time Taken: <span id="timeTaken">0:00</span></p>
-            </div>
+            <p>Questions Correct: <span id="score">0/15</span></p>
+            <p>Time Taken: <span id="timeTaken">3:55</span></p>
             <div class="action-buttons">
-                <button onclick="window.location.href='index.html'" class="nav-button">Return Home</button>
-                <button id="generateNewTest" class="nav-button">Generate New Test</button>
+                <button class="return-home-button" onclick="window.location.href='index.html'">Return Home</button>
+                <button class="generate-test-button" onclick="generateNewTest()">Generate New Test</button>
             </div>
         </div>
     </div>
     <script src="submit.js"></script>
 </body>
-</html>
-
-
 

@@ -25,62 +25,28 @@ body {
     font-family: sans-serif;
 }
 
-/* Results container positioning */
+/* Results container and card styling */
 .results-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    margin-left: 200px; /* Account for sidebar */
+    margin-left: 200px;
     padding: 20px;
     box-sizing: border-box;
 }
 
-.score-card {
+.results-card {
     background-color: var(--card-bg-color);
-    padding: 40px;
-    border-radius: 15px;
+    padding: 60px;  /* Increased from 40px */
+    border-radius: 15px;  /* Slightly larger radius */
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 100%;
+    max-width: 800px;  /* Increased from 500px */
+    margin: 0 auto;
 }
 
-.circular-progress {
-    position: relative;
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    background: conic-gradient(#4CAF50 0deg, #e0e0e0 0deg);
-    margin: 40px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.circular-progress::before {
-    content: "";
-    position: absolute;
-    width: 210px;
-    height: 210px;
-    border-radius: 50%;
-    background-color: var(--card-bg-color);
-}
-
-.progress-value {
-    position: relative;
-    font-size: 40px;
-    font-weight: 600;
-    color: var(--text-color);
-    z-index: 1;
-}
-
-.score-details {
-    margin: 30px 0;
-    font-size: 1.2rem;
-    color: var(--text-color);
-}
-
+/* Action buttons container */
 .action-buttons {
     display: flex;
     gap: 20px;
@@ -88,19 +54,34 @@ body {
     margin-top: 30px;
 }
 
-.nav-button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    background-color: #4CAF50;
+/* Return Home button */
+.return-home-button {
+    background-color: #333;
     color: white;
-    transition: background-color 0.2s ease;
 }
 
-.nav-button:hover {
-    background-color: #45a049;
+.generate-test-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Active state for both buttons */
+.return-home-button:active,
+.generate-test-button:active {
+    transform: translateY(1px);
+}
+
+/* Ensure these styles work in both themes */
+[data-theme="light"] .return-home-button,
+[data-theme="dark"] .return-home-button {
+    background-color: #2196F3 !important;
+    color: white !important;
+}
+
+[data-theme="light"] .generate-test-button,
+[data-theme="dark"] .generate-test-button {
+    background-color: #28a745 !important;
+    color: white !important;
 }
 
 /* Theme toggle button */
@@ -154,6 +135,257 @@ body {
 
 .sidebar a:hover {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Results page buttons styling */
+/* Base button styles */
+.return-home-button,
+#returnHome,
+button[onclick*="returnHome"] {
+    background-color: #2196F3 !important; /* Blue */
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0 10px;
+}
+
+.generate-test-button,
+#generateNewTest,
+button[onclick*="generateNewTest"] {
+    background-color: #28a745 !important; /* Green */
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0 10px;
+}
+
+/* Hover effects */
+.return-home-button:hover,
+#returnHome:hover,
+button[onclick*="returnHome"]:hover {
+    background-color: #1976D2 !important; /* Darker Blue */
+    transform: translateY(-2px);
+}
+
+.generate-test-button:hover,
+#generateNewTest:hover,
+button[onclick*="generateNewTest"]:hover {
+    background-color: #218838 !important; /* Darker Green */
+    transform: translateY(-2px);
+}
+
+/* Active state */
+button:active {
+    transform: translateY(1px);
+}
+
+/* Override any theme-specific styles */
+[data-theme="dark"] .results-container button[onclick*="returnHome"],
+[data-theme="dark"] .results-container .return-home-button,
+[data-theme="dark"] #returnHome {
+    background-color: #2196F3 !important;
+}
+
+[data-theme="dark"] .results-container button[onclick*="generateNewTest"],
+[data-theme="dark"] .results-container .generate-test-button,
+[data-theme="dark"] #generateNewTest {
+    background-color: #28a745 !important;
+}
+
+/* Circular progress styling */
+.circular-progress {
+    position: relative;
+    width: 300px;  /* Increased from 200px */
+    height: 300px;  /* Increased from 200px */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto;  /* Increased margin */
+    background: conic-gradient(#4CAF50 0deg, #e0e0e0 0deg);
+}
+
+.progress-value {
+    position: absolute;
+    font-size: 4rem;  /* Increased from 2.5rem */
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+/* Button styling */
+button {
+    padding: 15px 30px;  /* Increased padding */
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;  /* Increased font size */
+    transition: all 0.2s ease;
+    margin: 10px;
+}
+
+.return-home-button {
+    background-color: #333;
+    color: white;
+}
+
+.generate-test-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Active state for both buttons */
+.return-home-button:active,
+.generate-test-button:active {
+    transform: translateY(1px);
+}
+
+/* Ensure these styles work in both themes */
+[data-theme="light"] .return-home-button,
+[data-theme="dark"] .return-home-button {
+    background-color: #2196F3 !important;
+    color: white !important;
+}
+
+[data-theme="light"] .generate-test-button,
+[data-theme="dark"] .generate-test-button {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 160px;
+    padding: 10px;
+    z-index: 100;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background-color: var(--border-color);
+}
+
+/* Sidebar styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: var(--sidebar-bg-color);
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h3 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Results page buttons styling */
+/* Base button styles */
+.return-home-button,
+#returnHome,
+button[onclick*="returnHome"] {
+    background-color: #2196F3 !important; /* Blue */
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0 10px;
+}
+
+.generate-test-button,
+#generateNewTest,
+button[onclick*="generateNewTest"] {
+    background-color: #28a745 !important; /* Green */
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0 10px;
+}
+
+/* Hover effects */
+.return-home-button:hover,
+#returnHome:hover,
+button[onclick*="returnHome"]:hover {
+    background-color: #1976D2 !important; /* Darker Blue */
+    transform: translateY(-2px);
+}
+
+.generate-test-button:hover,
+#generateNewTest:hover,
+button[onclick*="generateNewTest"]:hover {
+    background-color: #218838 !important; /* Darker Green */
+    transform: translateY(-2px);
+}
+
+/* Active state */
+button:active {
+    transform: translateY(1px);
+}
+
+/* Override any theme-specific styles */
+[data-theme="dark"] .results-container button[onclick*="returnHome"],
+[data-theme="dark"] .results-container .return-home-button,
+[data-theme="dark"] #returnHome {
+    background-color: #2196F3 !important;
+}
+
+[data-theme="dark"] .results-container button[onclick*="generateNewTest"],
+[data-theme="dark"] .results-container .generate-test-button,
+[data-theme="dark"] #generateNewTest {
+    background-color: #28a745 !important;
+}
+
+/* Larger text for score and time */
+.results-card p {
+    font-size: 1.8rem;  /* Increased text size */
+    margin: 20px 0;
+}
+
+/* Larger heading */
+.results-card h2 {
+    font-size: 3rem;  /* Increased heading size */
+    margin-bottom: 30px;
 }
 
 

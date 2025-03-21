@@ -80,10 +80,20 @@ body {
 
 .status-item {
     font-size: 1.3rem;
-    color: #cccccc;
     padding: 12px 16px;
-    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 6px;
+}
+
+/* Dark theme status items */
+[data-theme="dark"] .status-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #cccccc;
+}
+
+/* Light theme status items */
+[data-theme="light"] .status-item {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333333;
 }
 
 /* Add specific styling for the second exam-status div */
@@ -114,23 +124,29 @@ body {
     transition: width 0.3s ease;
 }
 
-/* Navigation buttons */
-.nav-button, .submit-button {
-    padding: 15px 35px;     /* Increased from 12px 24px */
-    font-size: 1.1rem;      /* Added font size */
-    background-color: var(--card-bg-color);
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-    border-radius: 8px;     /* Increased from 6px */
+/* Navigation buttons styling for both themes */
+.nav-button, #prevQuestion, #nextQuestion {
+    background-color: #2196F3 !important; /* Material Blue */
+    color: white !important;
+    border: none !important;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
-    margin: 0 15px;         /* Increased from 10px */
-    min-width: 120px;       /* Added minimum width */
+    margin: 0 15px;
+    min-width: 120px;
 }
 
-.nav-button:hover {
-    background-color: #444;
-    transform: scale(1.05); /* Added subtle scale effect on hover */
+/* Hover state for navigation buttons */
+.nav-button:hover, #prevQuestion:hover, #nextQuestion:hover {
+    background-color: #1976D2 !important; /* Darker Blue on hover */
+    transform: translateY(-2px);
+}
+
+/* Active state for navigation buttons */
+.nav-button:active, #prevQuestion:active, #nextQuestion:active {
+    transform: translateY(1px);
 }
 
 /* Make sure the navigation container can handle the larger buttons */
@@ -424,4 +440,46 @@ body {
 /* Ensure exam title remains visible in light mode */
 [data-theme="light"] .exam-title h1 {
     color: #000000; /* Solid black */
+}
+
+/* Results page buttons styling */
+#returnHome, button[onclick*="returnHome"] {
+    background-color: #2196F3 !important; /* Material Blue */
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0 10px;
+}
+
+#generateNewTest, button[onclick*="generateNewTest"] {
+    background-color: #28a745 !important; /* Material Green */
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0 10px;
+}
+
+/* Hover states */
+#returnHome:hover, button[onclick*="returnHome"]:hover {
+    background-color: #1976D2 !important; /* Darker Blue */
+    transform: translateY(-2px);
+}
+
+#generateNewTest:hover, button[onclick*="generateNewTest"]:hover {
+    background-color: #218838 !important; /* Darker Green */
+    transform: translateY(-2px);
+}
+
+/* Active states */
+#returnHome:active, button[onclick*="returnHome"]:active,
+#generateNewTest:active, button[onclick*="generateNewTest"]:active {
+    transform: translateY(1px);
 }
