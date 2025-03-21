@@ -1,64 +1,74 @@
 import json
 import boto3
-from decimal import Decimal
 import random
+from decimal import Decimal
+from boto3.dynamodb.conditions import Key
 
-dynamodb = boto3.resource("dynamodb")
-TABLE_NAME = "A-1101"  # Adjust if your table is named differently
+# Initialize DynamoDB client
+dynamodb = boto3.resource('dynamodb')
+TABLE_NAME = 'A-1101'  # Changed table name to match existing table
 
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Decimal):
-            return float(obj)
+            return str(obj)
         return super(DecimalEncoder, self).default(obj)
 
 def lambda_handler(event, context):
     try:
         query_params = event.get("queryStringParameters", {}) or {}
-        domain = query_params.get("domain")
+        domains = query_params.get("domains", "").split(',')
         limit_str = query_params.get("limit", "1")
 
-        # Require a domain to filter by
-        if not domain:
+        if not domains or domains[0] == "":
             return {
                 "statusCode": 400,
-                "headers": {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET,OPTIONS",
-                    "Access-Control-Allow-Headers": "Content-Type"
-                },
-                "body": json.dumps({"error": "Missing domain parameter"})
+                "headers": {"Access-Control-Allow-Origin": "*"},
+                "body": json.dumps({"error": "Missing domains parameter"})
             }
 
-        # Convert limit to integer (default to 1 if invalid)
         try:
             limit = int(limit_str)
         except ValueError:
             limit = 1
 
         table = dynamodb.Table(TABLE_NAME)
+        all_items = []
 
-        # Scan the entire table (works for quick demos but can be slow at scale)
-        response = table.scan()
-        all_items = response.get("Items", [])
+        # Use scan with filter expression instead of query
+        for domain in domains:
+            response = table.scan(
+                FilterExpression="#d = :domain_val",
+                ExpressionAttributeNames={
+                    "#d": "domain"  # Use expression attribute name to handle reserved keyword
+                },
+                ExpressionAttributeValues={
+                    ":domain_val": domain
+                }
+            )
+            all_items.extend(response.get('Items', []))
 
-        # Filter by domain
-        filtered_items = [
-            item for item in all_items
-            if item.get("domain") == domain
-        ]
+            # Handle pagination if necessary
+            while 'LastEvaluatedKey' in response:
+                response = table.scan(
+                    FilterExpression="#d = :domain_val",
+                    ExpressionAttributeNames={
+                        "#d": "domain"
+                    },
+                    ExpressionAttributeValues={
+                        ":domain_val": domain
+                    },
+                    ExclusiveStartKey=response['LastEvaluatedKey']
+                )
+                all_items.extend(response.get('Items', []))
 
-        # Shuffle to randomize and slice to 'limit'
-        random.shuffle(filtered_items)
-        result = filtered_items[:limit]
+        # Shuffle and limit results
+        random.shuffle(all_items)
+        result = all_items[:limit]
 
         return {
             "statusCode": 200,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET,OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type"
-            },
+            "headers": {"Access-Control-Allow-Origin": "*"},
             "body": json.dumps(result, cls=DecimalEncoder)
         }
 
@@ -66,14 +76,6 @@ def lambda_handler(event, context):
         print(f"ERROR: {e}")
         return {
             "statusCode": 500,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET,OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type"
-            },
+            "headers": {"Access-Control-Allow-Origin": "*"},
             "body": json.dumps({"error": str(e)})
         }
-
-
-
-

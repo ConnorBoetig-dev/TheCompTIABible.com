@@ -23,51 +23,41 @@ async function initializeExam() {
     const examId = urlParams.get('exam') || '1101'; // Default to 1101 if not specified
     const questionCount = urlParams.get('count') || 90; // Default to 90 if not specified
     
-    // Get all domains for the exam from domainOptions (defined in app.js)
+    // Get all domains for the exam
     const domains = ['1.1', '1.2', '1.3', '1.4', '2.1', '2.2', '2.3', '2.4', '2.5', '2.6', '2.7', '2.8', 
                     '3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7', '4.1', '4.2', '5.1', '5.2', '5.3', 
                     '5.4', '5.5', '5.6', '5.7'];
 
     try {
-        // Create an array to store all questions
-        let allQuestions = [];
-        
-        // Calculate how many questions to fetch from each domain
-        const questionsPerDomain = Math.ceil(questionCount / domains.length);
-        
-        // Fetch questions from multiple domains
-        for (const domain of domains) {
-            const requestOptions = {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            };
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        };
 
-            const apiUrl = `${QUESTION_API_URL_BASE}?domain=${encodeURIComponent(domain)}&limit=${encodeURIComponent(questionsPerDomain)}`;
-            console.log('Fetching from:', apiUrl); // Debug log
-            
-            const response = await fetch(apiUrl, requestOptions);
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('API Error:', errorText); // Debug log
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            
-            if (!Array.isArray(data)) {
-                console.error('Unexpected data format:', data); // Debug log
-                throw new Error('Invalid data format received from API');
-            }
-            
-            allQuestions = allQuestions.concat(data);
+        // Make a single API call with all domains
+        const apiUrl = `${QUESTION_API_URL_BASE}?domains=${encodeURIComponent(domains.join(','))}&limit=${encodeURIComponent(questionCount)}`;
+        console.log('Fetching questions:', apiUrl); // Debug log
+        
+        const response = await fetch(apiUrl, requestOptions);
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('API Error:', errorText);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        // Shuffle the questions and limit to requested count
-        currentQuestions = shuffleArray(allQuestions).slice(0, questionCount);
+        const data = await response.json();
+        
+        if (!Array.isArray(data)) {
+            console.error('Unexpected data format:', data);
+            throw new Error('Invalid data format received from API');
+        }
+        
+        // Shuffle and set current questions
+        currentQuestions = shuffleArray(data);
         userAnswers = new Array(currentQuestions.length).fill(null);
         
         // Display first question
@@ -195,4 +185,6 @@ function shuffleArray(array) {
     }
     return array;
 }
+
+
 
