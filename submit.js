@@ -27,14 +27,29 @@ progressBar.style.background =
 
 // Theme toggle functionality
 const themeToggle = document.getElementById('themeToggle');
+
+// Check for saved theme preference
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+
+// Add event listener for theme toggle
 themeToggle.addEventListener('click', () => {
-    document.body.dataset.theme = 
-        document.body.dataset.theme === 'light' ? 'dark' : 'light';
-    themeToggle.textContent = 
-        document.body.dataset.theme === 'light' ? '🌙 Dark' : '☀️ Light';
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    // Update the theme
+    document.documentElement.setAttribute('data-theme', newTheme);
+    
+    // Update button text
+    themeToggle.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+    
+    // Save preference
+    localStorage.setItem('theme', newTheme);
 });
 
 // Update the "Generate New Test" button to include original parameters
 document.getElementById('generateNewTest').onclick = () => {
     window.location.href = `exam.html?exam=${originalExam}&count=${originalCount}`;
 };
+
