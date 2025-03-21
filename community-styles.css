@@ -1,0 +1,118 @@
+.community-container {
+    padding: 20px;
+    height: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center; /* Center the chat area horizontally */
+}
+
+/* Make the title bigger */
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.chat-area {
+    background: var(--card-bg);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: auto;
+    margin: 20px;
+    width: 800px; /* Fixed width that's roughly double the current width */
+}
+
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #c5c5c5;
+    border: 3px solid #707070;
+    border-radius: 8px;
+    color: #010101;
+    font-size: 1.2rem;
+    height: 500px;
+    width: 100%; /* Will fill the parent container width */
+}
+
+.chat-input-area {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 15px;
+    padding: 10px 0;
+    width: 100%; /* Will fill the parent container width */
+}
+
+#communityInput {
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+#communitySend {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background: var(--button-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    min-width: 100px;
+}
+
+#communitySend:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+}
+
+.chat-message {
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.user-name {
+    font-weight: bold;
+    margin-right: 12px;
+    font-size: 1.1rem;
+}
+
+.message-content {
+    font-size: 1.1rem;
+}
+
+.message-time {
+    font-size: 0.9rem;
+    color: #666;
+    margin-left: 12px;
+}
+
+/* Make scrollbar more visible */
+.chat-messages::-webkit-scrollbar {
+    width: 12px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+
+

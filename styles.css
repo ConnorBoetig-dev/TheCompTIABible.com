@@ -155,7 +155,7 @@ body {
                                              /* OPTIONS: Thinner (1px) for subtlety, or different color for contrast */
     border-radius: 5px;                      /* ROUNDED CORNERS: Slight rounding of card corners */
                                              /* OPTIONS: Larger value (10px+) for more rounded corners */
-    padding: 20px;                           /* INTERNAL SPACING: Space between card edge and its content */
+    padding: 30px;                           /* INTERNAL SPACING: Space between card edge and its content */
                                              /* IMPACT: Affects how crowded content feels inside cards */
     margin-bottom: 0px;                      /* VERTICAL SPACING: No extra space below cards */
                                              /* NOTE: Space between cards is controlled by .left-column gap instead */
@@ -194,9 +194,9 @@ body {
 /* CARD HEADINGS */
 .card h2,
 .thin-card h2 {
-    margin-bottom: 3px;                      /* SPACING BELOW: Gap between heading and next content */
+    margin-bottom: 15px;                      /* SPACING BELOW: Gap between heading and next content */
                                              /* IMPACT: Larger value adds more space after headings */
-    font-size: 1.6rem;                       /* TEXT SIZE: Relatively large (1.6x root text size) */
+    font-size: 2rem;                       /* TEXT SIZE: Relatively large (1.6x root text size) */
                                              /* OPTIONS: 1.2rem-2rem range works well for headings */
     line-height: 1;                        /* LINE HEIGHT: Compact vertical spacing for headings */
                                              /* OPTIONS: 1.0 (tighter) to 1.5 (more spaced) */
@@ -479,11 +479,11 @@ button:hover {
 /* Two-column layout */
 .two-column-layout {
     display: grid;
-    grid-template-columns: minmax(auto, 900px) minmax(300px, 400px);
-    gap: 20px; /* Reduced from 40px to 20px for a smaller gap */
-    margin: 0 auto;
-    max-width: 1400px;
-    padding: 0 40px;
+    grid-template-columns: minmax(auto, 900px) minmax(300px, 400px); /* Updated */
+    gap: 40px; /* Added controlled gap */
+    margin: 0 auto; /* Center the layout */
+    max-width: 1400px; /* Added max-width to prevent excessive stretching */
+    padding: 0 40px; /* Added horizontal padding */
     align-items: start;
 }
 
@@ -511,6 +511,31 @@ button:hover {
     margin: 0;
     min-height: 300px;
     width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .two-column-layout {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        padding: 0 20px;
+        gap: 20px;
+    }
+
+    .right-column .card {
+        min-height: auto;
+    }
+}
+
+/* Additional mobile adjustments */
+@media (max-width: 768px) {
+    .two-column-layout {
+        padding: 0 10px;
+    }
+    
+    .card,
+    .thin-card {
+        padding: 20px;
+    }
 }
 /* AFFECTS: The card(s) inside the right column.
    EDITING IMPACT: This specifically targets cards in the right column to ensure they
@@ -892,9 +917,43 @@ button:hover {
     cursor: not-allowed;
 }
 
+/* Increase the base card sizes */
+.card,
+.thin-card {
+    padding: 30px;  /* Increased from 20px */
+    font-size: 1.2rem; /* Add base font scaling */
+}
 
+/* Make headings larger */
+.card h2,
+.thin-card h2 {
+    font-size: 2rem;  /* Increased from 1.6rem */
+    margin-bottom: 15px; /* Increased spacing */
+}
 
+/* Make the description text larger */
+.card p,
+.thin-card p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
 
+/* Increase form control sizes */
+select, button {
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    margin: 10px 0;
+}
 
+/* Adjust chat window */
+.chat-window {
+    font-size: 1.1rem;
+    padding: 20px;
+}
 
-
+/* Make input fields larger */
+.chat-input {
+    font-size: 1.1rem;
+    padding: 12px 15px;
+}
