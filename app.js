@@ -235,17 +235,23 @@ async function generateQuestion() {
  * - Could be enhanced to add explanation sections, images, etc.
  ********************************************************/
 function displayQuestion(question) {
-  // Create the question container
+  console.log("Full question object structure:", JSON.stringify(question, null, 2));
+  
   const questionDiv = document.createElement("div");
   
   // Add the question prompt
   const promptEl = document.createElement("h3");
-  promptEl.textContent = question["question-text"]; // Changed from question.question
+  promptEl.textContent = question["question-text"];
   questionDiv.appendChild(promptEl);
   
   // Create container for options
   const optionsContainer = document.createElement("div");
   optionsContainer.className = "options-container";
+  
+  // Create explanation container (hidden initially)
+  const explanationDiv = document.createElement("div");
+  explanationDiv.className = "explanation-container";
+  explanationDiv.style.display = "none";
   
   // Add each answer option
   const options = [
@@ -255,6 +261,16 @@ function displayQuestion(question) {
     question["option-d"]
   ];
   
+  const explanations = [
+    question["explanation-a"],
+    question["explanation-b"],
+    question["explanation-c"],
+    question["explanation-d"]
+  ];
+
+  // Fix: Use "correct answer" instead of "correctAnswer"
+  const correctAnswer = question["correct answer"].toLowerCase().charCodeAt(0) - 97;
+
   options.forEach((option, index) => {
     const label = document.createElement("label");
     
@@ -263,6 +279,28 @@ function displayQuestion(question) {
     radio.name = "questionOption";
     radio.value = index;
     
+    // Add click handler for each radio button
+    radio.addEventListener("change", () => {
+      // Remove previous highlighting
+      optionsContainer.querySelectorAll("label").forEach(l => {
+        l.classList.remove("correct-answer", "incorrect-answer");
+      });
+
+      // Highlight selected answer
+      if (index === correctAnswer) {
+        label.classList.add("correct-answer");
+      } else {
+        label.classList.add("incorrect-answer");
+      }
+
+      // Show explanation
+      explanationDiv.innerHTML = `
+        <h4>${index === correctAnswer ? "Correct!" : "Incorrect"}</h4>
+        <p>${explanations[index]}</p>
+      `;
+      explanationDiv.style.display = "block";
+    });
+    
     label.appendChild(radio);
     label.appendChild(document.createTextNode(" " + option));
     
@@ -270,6 +308,7 @@ function displayQuestion(question) {
   });
   
   questionDiv.appendChild(optionsContainer);
+  questionDiv.appendChild(explanationDiv);
 
   // Add Next button
   const nextButton = document.createElement("button");
